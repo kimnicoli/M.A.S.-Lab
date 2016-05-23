@@ -1,9 +1,19 @@
 package people;
+
+import java.util.Set;
+
+import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.lang.acl.ACLMessage;
+
+import java.util.Iterator;
+import java.util.Map;
 
 public class Search extends Behaviour {
-
+	
+	public Search() {}
+	
 	public Search(Agent a) {
 		super(a);
 		// TODO Auto-generated constructor stub
@@ -11,18 +21,37 @@ public class Search extends Behaviour {
 
 	@Override
 	public void action() {
-		/*if(elements in dictionary != null)
-		 * 	current = higher
-		 * 	if(current < minValue)
-		 *		current = DF.request new restaurant
-		 * else
-		 * 	current = DF.request new restaurant
-		 *
-		 *while(current == full)
-		 *	current = DF.request new restaurant
-		 *		
-		 *Eat(current)
-		*/
+		//boolean foundNothing = false;
+		
+		if (!((Person)myAgent).restMap.isEmpty()) {
+			Set set = ((Person)myAgent).restMap.entrySet();
+			Iterator i = set.iterator();
+			Map.Entry current;
+			
+			ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
+			ACLMessage received;
+			
+			while(i.hasNext()){
+				current = (Map.Entry)i.next();
+				if((Double)(current.getValue()) > ((Person)myAgent).maxValue) {
+					//foundNothing = true;
+					break;
+				}
+				request.clearAllReceiver();
+				request.addReceiver(((AID)current.getKey()));
+				request.setContent("isFree?");
+				myAgent.send(request);
+				
+				/*received = myAgent.receive();
+				if(received != null) {
+					
+				} else {
+					block();
+				}*/
+			}
+			
+			//  addBehaviour(Receive); Nota, con numero di mittenti
+		}
 
 	}
 
