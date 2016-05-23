@@ -5,11 +5,7 @@ public class Restaurant extends Agent {
 
 	float rank;
 	
-	public Restaurant() {
-		
-	}
-
-	protected void Setup() {
+	protected void setup() {
 		//setup rank
 		System.out.println("Hello from " + getLocalName());
 	}
