@@ -1,9 +1,12 @@
 package people;
+
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 
 public class Search extends Behaviour {
 
+	public Search() {}
+	
 	public Search(Agent a) {
 		super(a);
 		// TODO Auto-generated constructor stub

@@ -1,26 +1,47 @@
 package restaurants;
+
+import com.sun.glass.ui.View.Capability;
 import jade.core.Agent;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import mas_lab.Main;
 
 public class Restaurant extends Agent {
 
-	float rank;
+	double quality;
+	int capacity;
 	
 	protected void setup() {
-		//setup rank
-		System.out.println("Hello from " + getLocalName());
+		quality = Math.random()* Main.EvaluateRange;
+		capacity = (int)(Math.random() * Main.MaxCapacity);
+		
+		DFAgentDescription dfd = new DFAgentDescription();
+		dfd.setName(getAID());
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Restaurant");
+		sd.setName(getLocalName());
+		dfd.addServices(sd);
+		try {
+			DFService.register(this, dfd);
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Hello from " + getLocalName() + "! My quality is " + quality + "and my capacity is " + capacity);
 	}
 
 	/**
-	 * @return the rank
+	 * @return the quality
 	 */
-	public float getRank() {
-		return rank;
+	public double getQuality() {
+		return quality;
 	}
 
 	/**
-	 * @param rank the rank to set
+	 * @return the capacity
 	 */
-	public void setRank(float rank) {
-		this.rank = rank;
+	public int getCapacity() {
+		return capacity;
 	}
 }
