@@ -10,7 +10,7 @@ public class Person extends Agent {
 		// TODO Auto-generated constructor stub
 	}
 	
-	protected void Setup() {
+	protected void setup() {
 		//add behaviours
 	}
 
