@@ -22,11 +22,15 @@ public class Launcher {
 		for(int i = 0; i < nRestaurants; i++) {
 			try {
 				ac = cc.createNewAgent("Restaurant " + i, "restaurants.Restaurant", null);
-				try {
-					ac.start();
-				}catch(StaleProxyException e){
-					System.out.println(e.getMessage());
-				}
+				ac.start();
+			} catch(StaleProxyException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		for(int i = 0; i < nPeople; i++) {
+			try {
+				ac = cc.createNewAgent("Person " + i, "people.Person", null);
+				ac.start();
 			} catch(StaleProxyException e) {
 				System.out.println(e.getMessage());
 			}
