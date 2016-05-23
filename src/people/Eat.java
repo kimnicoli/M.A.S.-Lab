@@ -1,12 +1,13 @@
 package people;
+
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 
 public class Eat extends Behaviour {
-
-	public Eat() {
-		// TODO Auto-generated constructor stub
-	}
+	
+	
+	
+	public Eat() {}
 
 	public Eat(Agent a) {
 		super(a);
