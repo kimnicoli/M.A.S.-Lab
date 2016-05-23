@@ -15,7 +15,7 @@ public class Launcher {
 		jade.core.Runtime runtime = jade.core.Runtime.instance();
 		
 		Profile p = new ProfileImpl();
-		p.setParameter(Profile.NO_MTP,null);
+		p.setParameter(Profile.NO_MTP, "true");
 		
 		ContainerController cc = runtime.createMainContainer(p);
 

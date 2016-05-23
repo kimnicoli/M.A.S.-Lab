@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Launcher launch = new Launcher();
-		//launch.InitJade(1, 0);
+		launch.InitJade(1, 0);
 
 	}
 
