@@ -6,7 +6,8 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("Hello World!");
+		Launcher launch = new Launcher();
+		//launch.InitJade(1, 0);
 
 	}
 
