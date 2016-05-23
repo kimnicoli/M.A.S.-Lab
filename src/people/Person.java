@@ -1,25 +1,25 @@
 package people;
 
-import java.sql.ResultSet;
-import java.util.Hashtable;
+import java.util.TreeMap;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
-import jade.domain.RequestManagementBehaviour;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import mas_lab.Main;
 
 public class Person extends Agent {
 
-	Hashtable<AID, Double> restMap;
-	double minValue;
+	TreeMap<AID, Double> restMap;
+	double maxValue; //Consideriamo una scala di valutazione inversa. Perché la TreeMap ordina dal più basso al più alto
+	double boldness;
 	
 	protected void setup() {
 		
-		restMap = new Hashtable();
-		minValue = Math.random() * Main.EvaluateRange;
+		restMap = new TreeMap();
+		maxValue = Math.random() * Main.EvaluateRange;
+		boldness = Main.MinBoldness + Math.random() * (Main.MaxBoldness - Main.MinBoldness);
 		
 		DFAgentDescription dfd = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
@@ -32,7 +32,7 @@ public class Person extends Agent {
 		} catch (FIPAException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Hi from " + getLocalName() + "! I prefer " + minValue);
+		System.out.println("Hi from " + getLocalName() + "! I prefer " + maxValue);
 		
 		for (DFAgentDescription result : results){
 			restMap.put(result.getName(), Math.random() * Main.EvaluateRange);

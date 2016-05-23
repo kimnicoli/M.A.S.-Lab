@@ -12,10 +12,12 @@ public class Restaurant extends Agent {
 
 	double quality;
 	int capacity;
+	int fullness;
 	
 	protected void setup() {
 		quality = Math.random()* Main.EvaluateRange;
 		capacity = (int)(Math.random() * Main.MaxCapacity);
+		fullness = 0;
 		
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
@@ -43,5 +45,11 @@ public class Restaurant extends Agent {
 	 */
 	public int getCapacity() {
 		return capacity;
+	}
+	
+	boolean isFree () {
+		if(fullness < capacity)
+			return true;
+		return false;
 	}
 }
