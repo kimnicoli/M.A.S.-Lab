@@ -38,7 +38,7 @@ public class Person extends Agent {
 			restMap.put(result.getName(), Math.random() * Main.EvaluateRange);
 		}
 		
-		//addBehaviour(new Search());
+		addBehaviour(new Search());
 	}
 
 }

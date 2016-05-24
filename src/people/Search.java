@@ -1,12 +1,10 @@
 package people;
 
 import java.util.Set;
-
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
-
 import java.util.Iterator;
 import java.util.Map;
 
@@ -21,7 +19,6 @@ public class Search extends Behaviour {
 
 	@Override
 	public void action() {
-		//boolean foundNothing = false;
 		
 		if (!((Person)myAgent).restMap.isEmpty()) {
 			Set set = ((Person)myAgent).restMap.entrySet();
@@ -31,28 +28,20 @@ public class Search extends Behaviour {
 			ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
 			ACLMessage received;
 			
+			int receivers = 0;
+			
 			while(i.hasNext()){
 				current = (Map.Entry)i.next();
-				if((Double)(current.getValue()) > ((Person)myAgent).maxValue) {
-					//foundNothing = true;
+				if((Double)(current.getValue()) > ((Person)myAgent).maxValue)
 					break;
-				}
+				receivers++;
 				request.clearAllReceiver();
 				request.addReceiver(((AID)current.getKey()));
 				request.setContent("isFree?");
 				myAgent.send(request);
-				
-				/*received = myAgent.receive();
-				if(received != null) {
-					
-				} else {
-					block();
-				}*/
 			}
-			
-			//  addBehaviour(Receive); Nota, con numero di mittenti
+			myAgent.addBehaviour(new Receive(receivers));
 		}
-
 	}
 
 	@Override

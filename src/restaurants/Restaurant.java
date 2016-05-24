@@ -31,6 +31,8 @@ public class Restaurant extends Agent {
 			e.printStackTrace();
 		}
 		System.out.println("Hello from " + getLocalName() + "! My quality is " + quality + "and my capacity is " + capacity);
+	
+		addBehaviour(new RestaurantReceiver());
 	}
 
 	/**
