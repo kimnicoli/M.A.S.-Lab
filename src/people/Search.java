@@ -1,16 +1,24 @@
 package people;
 
 import java.util.Set;
+import java.util.Vector;
+
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 import java.util.Iterator;
 import java.util.Map;
 
-public class Search extends Behaviour {
+public class Search extends OneShotBehaviour {
+	
+	PersonReceiver receiver;
 	
 	public Search() {}
+	
+	public Search(PersonReceiver receiver) {
+		this.receiver = receiver;
+	}
 	
 	public Search(Agent a) {
 		super(a);
@@ -21,6 +29,7 @@ public class Search extends Behaviour {
 	public void action() {
 		
 		if (!((Person)myAgent).restMap.isEmpty()) {
+			Vector<AID> receivers = new Vector<AID>();
 			Set set = ((Person)myAgent).restMap.entrySet();
 			Iterator i = set.iterator();
 			Map.Entry current;
@@ -28,26 +37,34 @@ public class Search extends Behaviour {
 			ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
 			ACLMessage received;
 			
-			int receivers = 0;
+			//int receivers = 0;
 			
 			while(i.hasNext()){
 				current = (Map.Entry)i.next();
 				if((Double)(current.getValue()) > ((Person)myAgent).maxValue)
 					break;
-				receivers++;
+				//receivers++;
 				request.clearAllReceiver();
 				request.addReceiver(((AID)current.getKey()));
 				request.setContent("isFree?");
 				myAgent.send(request);
+				
+				receivers.addElement(((AID)current.getKey()));
+				
+				System.out.println("Request sent");
 			}
-			myAgent.addBehaviour(new Receive(receivers));
+			
+			receiver.setReceivers(receivers);
+			
+			System.out.println("Sent " + receivers.size() + " messages");
+			//myAgent.addBehaviour(new Receive(receivers));
 		}
 	}
 
-	@Override
+	/*@Override
 	public boolean done() {
 		// TODO Auto-generated method stub
 		return false;
-	}
+	}*/
 
 }
