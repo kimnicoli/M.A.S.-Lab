@@ -18,7 +18,7 @@ public class Person extends Agent {
 	protected void setup() {
 		
 		restMap = new TreeMap();
-		maxValue = Math.random() * Main.EvaluateRange;
+		maxValue = Main.EvaluateRange;//Math.random() * Main.EvaluateRange;
 		boldness = Main.MinBoldness + Math.random() * (Main.MaxBoldness - Main.MinBoldness);
 		
 		DFAgentDescription dfd = new DFAgentDescription();
@@ -38,7 +38,9 @@ public class Person extends Agent {
 			restMap.put(result.getName(), Math.random() * Main.EvaluateRange);
 		}
 		
-		addBehaviour(new Search());
+		PersonReceiver receiver = new PersonReceiver();
+		addBehaviour(receiver);
+		addBehaviour(new Search(receiver));
 	}
 
 }

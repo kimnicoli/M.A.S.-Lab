@@ -2,10 +2,10 @@ package people;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class Eat extends Behaviour {
+public class Eat extends  OneShotBehaviour {
 	
 	AID place;
 
@@ -40,15 +40,15 @@ public class Eat extends Behaviour {
 			+ ", will eat at " + place.getLocalName() + ", of which I think " 
 			+ ((Person)myAgent).restMap.get(place));
 			
-			myAgent.addBehaviour(new Evaluate(place));
+			//myAgent.addBehaviour(new Evaluate(place));
 		}
 
 	}
 
-	@Override
+	/*@Override
 	public boolean done() {
 		// TODO Auto-generated method stub
 		return false;
-	}
+	}*/
 
 }
