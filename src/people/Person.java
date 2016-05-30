@@ -1,4 +1,4 @@
-package people;
+package src.people;
 
 import java.util.TreeMap;
 import jade.core.AID;
@@ -7,7 +7,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import mas_lab.Main;
+import src.mas_lab.Main;
 
 public class Person extends Agent {
 

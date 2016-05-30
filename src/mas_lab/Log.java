@@ -1,4 +1,4 @@
-package mas_lab;
+package src.mas_lab;
 
 import java.util.TreeMap;
 import java.io.BufferedWriter;

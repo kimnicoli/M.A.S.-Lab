@@ -1,4 +1,4 @@
-package mas_lab;
+package src.mas_lab;
 
 public class Main {
 	

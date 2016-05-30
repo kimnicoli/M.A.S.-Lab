@@ -1,4 +1,4 @@
-package restaurants;
+package src.restaurants;
 
 import com.sun.glass.ui.View.Capability;
 import jade.core.Agent;
@@ -7,7 +7,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.Property;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import mas_lab.Main;
+import src.mas_lab.Main;
 
 public class Restaurant extends Agent {
 

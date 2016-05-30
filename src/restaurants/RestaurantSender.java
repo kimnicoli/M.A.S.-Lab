@@ -1,4 +1,4 @@
-package restaurants;
+package src.restaurants;
 
 import jade.core.AID;
 import jade.core.Agent;

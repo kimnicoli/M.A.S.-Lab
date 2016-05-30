@@ -1,4 +1,4 @@
-package people;
+package src.people;
 
 import java.util.TreeMap;
 

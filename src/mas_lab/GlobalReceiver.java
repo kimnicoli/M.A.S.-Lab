@@ -1,4 +1,4 @@
-package mas_lab;
+package src.mas_lab;
 
 import java.util.TreeMap;
 import java.util.Vector;
@@ -12,10 +12,10 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-import people.Chose;
-import people.Evaluate;
-import people.Person;
-import people.Search;
+import src.people.Chose;
+import src.people.Evaluate;
+import src.people.Person;
+import src.people.Search;
 
 public class GlobalReceiver extends CyclicBehaviour {
 	
