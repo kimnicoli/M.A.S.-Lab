@@ -26,11 +26,11 @@ public class Chose extends OneShotBehaviour {
 		if(!free.isEmpty()){
 			receiver.setCurrentTarget(free.firstEntry().getKey());
 			myAgent.addBehaviour(new Eat(free.firstEntry().getKey()));
-			System.out.println("Eating there");
+			//System.out.println("Eating there");
 		} else {
 			//TODO
 			myAgent.addBehaviour(new Eat());
-			System.out.println("Eating nowhere");
+			//System.out.println("Eating nowhere");
 		}
 
 	}

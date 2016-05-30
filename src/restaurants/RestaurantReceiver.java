@@ -25,11 +25,11 @@ public class RestaurantReceiver extends CyclicBehaviour {
 				case ACLMessage.REQUEST:{
 					if(((Restaurant)myAgent).isFree()){
 						myAgent.addBehaviour(new RestaurantSender(ACLMessage.PROPOSE, msg.getSender()));
-						System.out.println("Sending restaurant proposal");
+						//System.out.println("Sending restaurant proposal");
 						block();
 					} else {
 						myAgent.addBehaviour(new RestaurantSender(ACLMessage.REFUSE, msg.getSender()));
-						System.out.println("Sending restaurant proposal");
+						//System.out.println("Sending restaurant proposal");
 						block();
 					}
 					break;
@@ -37,11 +37,11 @@ public class RestaurantReceiver extends CyclicBehaviour {
 				case ACLMessage.ACCEPT_PROPOSAL:{
 					if(((Restaurant)myAgent).isFree()){
 						myAgent.addBehaviour(new RestaurantSender(ACLMessage.INFORM, msg.getSender(), true));
-						System.out.println("Sending restaurant inform");
+						//System.out.println("Sending restaurant inform");
 						block();
 					} else {
 						myAgent.addBehaviour(new RestaurantSender(ACLMessage.FAILURE, msg.getSender()));
-						System.out.println("Sending restaurant failure");
+						//System.out.println("Sending restaurant failure");
 						block();
 					}
 					break;

@@ -37,7 +37,7 @@ public class RestaurantSender extends OneShotBehaviour {
 			msg.setContent(Double.toString(((Restaurant)myAgent).quality));
 		
 		myAgent.send(msg);
-		System.out.println("Sent restaurant message");
+		//System.out.println("Sent restaurant message");
 		
 		myAgent.addBehaviour(new RestaurantReceiver());
 	}
