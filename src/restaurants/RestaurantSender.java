@@ -2,10 +2,10 @@ package restaurants;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
-public class RestaurantSender extends Behaviour {
+public class RestaurantSender extends OneShotBehaviour {
 
 	AID receiver;
 	int performative;
@@ -37,14 +37,15 @@ public class RestaurantSender extends Behaviour {
 			msg.setContent(Double.toString(((Restaurant)myAgent).quality));
 		
 		myAgent.send(msg);
+		//System.out.println("Sent restaurant message");
 		
 		myAgent.addBehaviour(new RestaurantReceiver());
 	}
 
-	@Override
+	/*@Override
 	public boolean done() {
 		// TODO Auto-generated method stub
 		return false;
-	}
+	}*/
 
 }
