@@ -7,6 +7,8 @@ public class Main {
 	public static double MinBoldness = 0;
 	public static double MaxBoldness = 1;
 	public static int MaxTurns = 3;
+	
+	public static int MaxFriends = 5;
 
 	//public static Launcher launch;
 	

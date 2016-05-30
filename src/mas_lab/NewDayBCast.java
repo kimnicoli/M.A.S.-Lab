@@ -34,7 +34,7 @@ public class NewDayBCast extends OneShotBehaviour {
 			System.out.println(amsd.length);
 			
 			((Global)myAgent).incrementTurn();
-			msg.setContent("Start: turn " + ((Global)myAgent).getTurn());
+			msg.setContent(Integer.toString(((Global)myAgent).getTurn()));
 			myAgent.send(msg);
 		} catch(FIPAException e) {
 			e.printStackTrace();
