@@ -52,6 +52,7 @@ public class Global extends Agent {
 		}
 		
 		turn = 0;
+		addBehaviour(new GlobalReceiver());
 	}
 	
 	public void InitPeople () {		

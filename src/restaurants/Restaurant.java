@@ -5,6 +5,7 @@ import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.Property;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import mas_lab.Main;
 
@@ -24,6 +25,7 @@ public class Restaurant extends Agent {
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("Restaurant");
 		sd.setName(getLocalName());
+		sd.addProperties(new Property("quality", quality));
 		dfd.addServices(sd);
 		try {
 			DFService.register(this, dfd);

@@ -9,8 +9,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import jade.core.AID;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
-
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,11 +21,11 @@ public class Log extends OneShotBehaviour {
 	static String stringa;
 
 	TreeMap<AID, Double> restMap;
-	AID[] listRe;
+	DFAgentDescription[] listRe;
 	boolean newFile;
 	AID sender;
 
-	public Log(AID[] listRe, AID sender, TreeMap<AID, Double> restMap, boolean newFile) {
+	public Log(DFAgentDescription[] listRe, AID sender, TreeMap<AID, Double> restMap, boolean newFile) {
 
 		if (stringa == null)
 			stringa = new String();
@@ -36,24 +39,20 @@ public class Log extends OneShotBehaviour {
 
 	@Override
 	public void action() {
-		if (this.listRe != null && restMap != null) {
-			Map<AID, TreeMap<AID, Double>> output = new HashMap<AID, TreeMap<AID, Double>>();
-			output.put(sender, restMap);
+		if (this.listRe != null || restMap != null) {
 			int turn = 0;// = ((Global)myAgent).getTurn();
+			stringa = stringa.concat(String.valueOf(turn));
+			stringa = stringa.concat(this.sender.getName());
 
-			for (Entry<AID, TreeMap<AID, Double>> entry : output.entrySet()) {
-				stringa = stringa.concat(String.valueOf(turn));
-				stringa = stringa.concat(entry.getKey().getName());
-				for (int i = 0; i < listRe.length; i++) {
-					stringa = stringa.concat(",");
-					stringa = stringa.concat(String.valueOf(entry.getValue().get(listRe[i])));
-				}
+			for (int i = 0; i < listRe.length; i++) {
+				stringa = stringa.concat(",");
+				stringa = stringa.concat(String.valueOf(this.restMap.get(listRe[i].getName())));
 			}
-
-			stringa = stringa.concat("\n");
 		}
 
-		if (newFile) {
+		stringa = stringa.concat("\n");
+
+		if (this.newFile) {
 			// -----------------------WRITE LOG----------------------------
 			// -----------------------WRITE LOG----------------------------
 
@@ -83,6 +82,25 @@ public class Log extends OneShotBehaviour {
 			// -----------------------WRITE INFO----------------------------
 
 			String aggFileNameInfo = "agg-" + String.valueOf("infoLOG.txt");
+			String info = new String();
+			for (int i = 0; i < listRe.length; i++) {
+
+				info = info.concat(listRe[i].getName().getName());
+				info = info.concat(",");
+
+				// Iterator services = listRe[0].getAllServices();
+				// ServiceDescription service = null;
+				// double rank = 0.f;
+				// while (services.hasNext())
+				// {
+				// service = (ServiceDescription)services.next();
+				// Iterator properties = service.getAllProperties();
+				// while (properties.hasNext())
+				// {
+				// service.get
+				// }
+				// }
+			}
 
 			try {
 				fstream = new FileWriter(aggFileNameInfo);
@@ -90,12 +108,14 @@ public class Log extends OneShotBehaviour {
 				e.printStackTrace();
 			}
 			try {
-				out.write(stringa);
+				out.write(info);
 				out.flush();
 				out.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
+			stringa = null;
 		}
 	}
 }

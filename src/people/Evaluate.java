@@ -70,7 +70,7 @@ public class Evaluate extends OneShotBehaviour {
 		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 		msg.addReceiver(global);
 		try {
-		msg.setContentObject(((Person)myAgent).restMap);
+			msg.setContentObject(((Person)myAgent).restMap);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
