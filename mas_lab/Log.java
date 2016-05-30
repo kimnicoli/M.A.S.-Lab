@@ -91,6 +91,7 @@ public class Log extends OneShotBehaviour {
 				info = info.concat(",");
 				ServiceDescription sd = (ServiceDescription)listRe[i].getAllServices().next();
 				
+				
 				// Iterator services = listRe[0].getAllServices();
 				// ServiceDescription service = null;
 				// double rank = 0.f;
