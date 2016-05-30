@@ -37,7 +37,7 @@ public class Launcher {
 
 		for(int i = 0; i < nRestaurants; i++) {
 			try {
-				ac = cc.createNewAgent("Restaurant " + i, "restaurants.Restaurant", null);
+				ac = cc.createNewAgent("Restaurant " + i, "src.restaurants.Restaurant", null);
 				ac.start();
 			} catch(StaleProxyException e) {
 				e.printStackTrace();
@@ -45,7 +45,7 @@ public class Launcher {
 		}
 		
 		try {
-			ac = cc.createNewAgent("Global Agent", "mas_lab.Global", null);
+			ac = cc.createNewAgent("Global Agent", "src.mas_lab.Global", null);
 			ac.start();
 		} catch(StaleProxyException e) {
 			e.printStackTrace();
