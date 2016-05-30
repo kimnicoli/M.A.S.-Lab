@@ -52,7 +52,28 @@ public class Global extends Agent {
 		}
 		
 		turn = 0;
-		addBehaviour(new GlobalReceiver());
+		
+		DFAgentDescription pdfd = new DFAgentDescription();
+		ServiceDescription psd = new ServiceDescription();
+		psd.setType("Person");
+		pdfd.addServices(psd);
+		
+		
+		DFAgentDescription[] presults = new DFAgentDescription[0];
+		
+		while(presults.length < Launcher.instance().getnPeople()) {		
+			try {
+				presults = DFService.search(this, pdfd);
+				
+			} catch (FIPAException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		System.out.println("outta here, with " + results.length);
+		
+		
+		addBehaviour(new GlobalReceiver(this, presults, results));
 	}
 	
 	public void InitPeople () {		
