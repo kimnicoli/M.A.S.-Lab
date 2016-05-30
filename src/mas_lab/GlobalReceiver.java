@@ -69,13 +69,22 @@ public class GlobalReceiver extends CyclicBehaviour {
 						PeopleReceived ++;
 						
 						if(PeopleReceived == allPeople.size()){
-							try{
-								myAgent.addBehaviour(new Log(allRArray, msg.getSender(), 
-										(TreeMap<AID, Double>)msg.getContentObject(), true));
-							} catch(UnreadableException e) {
-								e.printStackTrace();
+							if(((Global)myAgent).turn < Main.MaxTurns){
+								reset();
+								try{
+									myAgent.addBehaviour(new Log(allRArray,	msg.getSender(),
+											(TreeMap<AID, Double>)msg.getContentObject(), false));
+								} catch(Exception e) {
+									e.printStackTrace();
+								}
 							}
-							//reset();
+							else
+								try{
+									myAgent.addBehaviour(new Log(allRArray, msg.getSender(), 
+											(TreeMap<AID, Double>)msg.getContentObject(), true));
+								} catch(UnreadableException e) {
+									e.printStackTrace();
+								}
 						}
 						else{
 							try{
