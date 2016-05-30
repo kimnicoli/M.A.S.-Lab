@@ -1,4 +1,4 @@
-package mas_lab;
+package src.mas_lab;
 
 import java.util.TreeMap;
 import java.util.Vector;
@@ -12,56 +12,40 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
-import people.Chose;
-import people.Evaluate;
-import people.Person;
-import people.Search;
+import src.people.Chose;
+import src.people.Evaluate;
+import src.people.Person;
+import src.people.Search;
 
 public class GlobalReceiver extends CyclicBehaviour {
 	
 	Vector<DFAgentDescription> allRestaurants;
-	Vector<DFAgentDescription> allPeople;
+	Vector<AID> allPeople;
 	Vector<DFAgentDescription> currentRestaurant;
-	Vector<DFAgentDescription> currentPeople;
+	Vector<AID> currentPeople;
+	DFAgentDescription[] allRArray;
 	int PeopleReceived;
 	int RestaurantReceived;
 
-	public GlobalReceiver() {
-		allRestaurants = new Vector<DFAgentDescription>();
-		allPeople = new Vector<DFAgentDescription>();
-		getAll();
+	public GlobalReceiver(Agent a, DFAgentDescription[] allPeople, DFAgentDescription[] allRestaurants) {
+		super(a);
+		this.myAgent = a;
+		this.allRestaurants = new Vector<DFAgentDescription>();
+		this.allPeople = new Vector<AID>();
+		
+		allRArray = allRestaurants;
+		
+		for(DFAgentDescription dfd : allPeople)
+			if(dfd != null)
+				this.allPeople.add(dfd.getName());
+		for(DFAgentDescription dfd : allRestaurants)
+			if(dfd != null)
+				this.allRestaurants.add(dfd);
+		
+
 		reset();
 	}
 	
-	void getAll() {
-		DFAgentDescription pdfd = new DFAgentDescription();
-		ServiceDescription psd = new ServiceDescription();
-		psd.setType("Person");
-		pdfd.addServices(psd);
-		DFAgentDescription[] results;
- 		try {
-			results = DFService.search(myAgent, pdfd);
-			for(DFAgentDescription dfd : results)
-				if(dfd != null)
-					allPeople.add(dfd);
-		} catch(FIPAException e) {
-			e.printStackTrace();
-		}
- 		
- 		DFAgentDescription rdfd = new DFAgentDescription();
-		ServiceDescription rsd = new ServiceDescription();
-		rsd.setType("Restaurant");
-		rdfd.addServices(rsd);
- 		try {
-			results = DFService.search(myAgent, rdfd);
-			for(DFAgentDescription dfd : results)
-				if(dfd != null)
-					allRestaurants.add(dfd);
-		} catch(FIPAException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public GlobalReceiver(Agent a) {
 		super(a);
 		// TODO Auto-generated constructor stub
@@ -76,28 +60,28 @@ public class GlobalReceiver extends CyclicBehaviour {
 		} else {
 			switch (msg.getPerformative()) {
 				case (ACLMessage.INFORM):{
-					//System.out.println("Received inform from " + msg.getSender());
+					System.out.println("Received inform from " + msg.getSender());
 					//System.out.println(currentTarget);
 					
 					if(currentPeople.contains(msg.getSender())){
-						//System.out.println("Starting valutation");
+						System.out.println("Received inform");
 						currentPeople.remove(msg.getSender());
 						PeopleReceived ++;
 						
 						if(PeopleReceived == allPeople.size()){
 							try{
-								myAgent.addBehaviour(new Log((DFAgentDescription[])allRestaurants.toArray(),
-										msg.getSender(), (TreeMap<AID, Double>)msg.getContentObject(), true));
+								myAgent.addBehaviour(new Log(allRArray, msg.getSender(), 
+										(TreeMap<AID, Double>)msg.getContentObject(), true));
 							} catch(UnreadableException e) {
 								e.printStackTrace();
 							}
-							reset();
+							//reset();
 						}
 						else{
 							try{
-								myAgent.addBehaviour(new Log((DFAgentDescription[])allRestaurants.toArray(),
-										msg.getSender(), (TreeMap<AID, Double>)msg.getContentObject(), false));
-							} catch(UnreadableException e) {
+								myAgent.addBehaviour(new Log(allRArray,	msg.getSender(),
+										(TreeMap<AID, Double>)msg.getContentObject(), false));
+							} catch(Exception e) {
 								e.printStackTrace();
 							}
 						}
@@ -114,11 +98,14 @@ public class GlobalReceiver extends CyclicBehaviour {
 	}
 	
 	public void reset(){
-		currentRestaurant=allRestaurants;
-		currentPeople=allPeople;
+		currentRestaurant = (Vector<DFAgentDescription>)allRestaurants.clone();
+		currentPeople = (Vector<AID>)allPeople.clone();
+		System.out.println(currentPeople.size());
 		PeopleReceived=0;
 		RestaurantReceived=0;
-		myAgent.addBehaviour(new NewDayBCast());
+		((Global) myAgent).addBehaviour(new NewDayBCast(myAgent));
+	
+		//System.out.println(this.myAgent.getLocalName());
 	}
 	
 }

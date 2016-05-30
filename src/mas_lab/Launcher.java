@@ -1,4 +1,4 @@
-package mas_lab;
+package src.mas_lab;
 
 import jade.core.Profile;
 import jade.core.ProfileImpl;

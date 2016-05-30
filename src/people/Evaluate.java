@@ -1,4 +1,4 @@
-package people;
+package src.people;
 
 import java.io.IOException;
 
@@ -29,7 +29,8 @@ public class Evaluate extends OneShotBehaviour {
 		}
 	}
 	
-	public Evaluate (double quality, AID place, PersonReceiver receiver) {
+	public Evaluate (Agent a, double quality, AID place, PersonReceiver receiver) {
+		myAgent = a;
 		this.quality = quality;
 		this.place = place;
 		this.receiver = receiver;
@@ -45,7 +46,9 @@ public class Evaluate extends OneShotBehaviour {
 		sd.setType("Global");
 		dfd.addServices(sd);
 		try {
-			return DFService.search(myAgent, dfd)[0].getName();
+			AID gAID = DFService.search(myAgent, dfd)[0].getName();
+			//System.out.println(gAID.getName());
+			return gAID;
 		} catch (FIPAException e){
 			e.printStackTrace();
 			return null;
@@ -71,6 +74,7 @@ public class Evaluate extends OneShotBehaviour {
 		msg.addReceiver(global);
 		try {
 			msg.setContentObject(((Person)myAgent).restMap);
+			//System.out.println("sent map");
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

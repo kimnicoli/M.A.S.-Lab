@@ -1,4 +1,4 @@
-package restaurants;
+package src.restaurants;
 
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;

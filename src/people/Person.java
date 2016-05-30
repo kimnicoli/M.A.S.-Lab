@@ -1,4 +1,4 @@
-package people;
+package src.people;
 
 import java.util.TreeMap;
 import jade.core.AID;
@@ -7,7 +7,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
-import mas_lab.Main;
+import src.mas_lab.Main;
 
 public class Person extends Agent {
 
@@ -18,7 +18,7 @@ public class Person extends Agent {
 	protected void setup() {
 		
 		restMap = new TreeMap();
-		maxValue = Math.random() * Main.EvaluateRange;//Main.EvaluateRange;//
+		maxValue = Main.EvaluateRange;//Math.random() * Main.EvaluateRange;//
 		boldness = Main.MinBoldness + Math.random() * (Main.MaxBoldness - Main.MinBoldness);
 		
 		DFAgentDescription dfd = new DFAgentDescription();
@@ -38,10 +38,6 @@ public class Person extends Agent {
 			restMap.put(result.getName(), Math.random() * Main.EvaluateRange);
 		}
 		
-		PersonReceiver receiver = new PersonReceiver();
-		addBehaviour(receiver);
-		//addBehaviour(new Search(receiver));
-		
 		DFAgentDescription mydfd = new DFAgentDescription();
 		ServiceDescription mysd = new ServiceDescription();
 		mysd.setType("Person");
@@ -52,5 +48,10 @@ public class Person extends Agent {
 		} catch (FIPAException e) {
 			e.printStackTrace();
 		}
+		
+		PersonReceiver receiver = new PersonReceiver();
+		addBehaviour(receiver);
+		//addBehaviour(new Search(receiver));
+		
 	}
 }

@@ -1,4 +1,4 @@
-package people;
+package src.people;
 
 import jade.core.AID;
 import jade.core.Agent;
