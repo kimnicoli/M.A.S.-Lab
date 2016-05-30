@@ -69,9 +69,13 @@ public class PersonReceiver extends CyclicBehaviour {
 				case (ACLMessage.FAILURE):{
 					//System.out.println("Received failure");
 					if(msg.getSender().equals(currentTarget)){
-						myAgent.addBehaviour(new Search());
+						myAgent.addBehaviour(new Search(this));
 						Reset();
 					}
+					break;
+				}
+				case (ACLMessage.CONFIRM):{
+					myAgent.addBehaviour(new Search(this));
 					break;
 				}
 				default:

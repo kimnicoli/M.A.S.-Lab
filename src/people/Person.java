@@ -40,7 +40,17 @@ public class Person extends Agent {
 		
 		PersonReceiver receiver = new PersonReceiver();
 		addBehaviour(receiver);
-		addBehaviour(new Search(receiver));
+		//addBehaviour(new Search(receiver));
+		
+		DFAgentDescription mydfd = new DFAgentDescription();
+		ServiceDescription mysd = new ServiceDescription();
+		mysd.setType("Person");
+		mysd.setName(this.getName());
+		mydfd.addServices(mysd);
+		try {
+			DFService.register(this, mydfd);	
+		} catch (FIPAException e) {
+			e.printStackTrace();
+		}
 	}
-
 }

@@ -11,7 +11,21 @@ import jade.wrapper.StaleProxyException;
 
 public class Global extends Agent {
 	
+	int turn;
+	
 	protected void setup() {
+		DFAgentDescription mydfd = new DFAgentDescription();
+		ServiceDescription mysd = new ServiceDescription();
+		mysd.setType("Global");
+		mysd.setName(this.getName());
+		mydfd.addServices(mysd);
+		try {
+			DFService.register(this, mydfd);
+		} catch (FIPAException e){
+			e.printStackTrace();
+		}
+		
+		
 		DFAgentDescription[] results = new DFAgentDescription[0];
 		DFAgentDescription dfd = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
@@ -36,6 +50,9 @@ public class Global extends Agent {
 		} catch(NullPointerException e) {
 			e.printStackTrace();
 		}
+		
+		turn = 0;
+		addBehaviour(new GlobalReceiver());
 	}
 	
 	public void InitPeople () {		
@@ -49,5 +66,13 @@ public class Global extends Agent {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public int getTurn() {
+		return turn;
+	}
+	
+	public void incrementTurn() {
+		turn++;
 	}
 }
