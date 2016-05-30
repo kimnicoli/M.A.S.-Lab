@@ -18,7 +18,7 @@ public class Person extends Agent {
 	protected void setup() {
 		
 		restMap = new TreeMap();
-		maxValue = Main.EvaluateRange;//Math.random() * Main.EvaluateRange;
+		maxValue = Math.random() * Main.EvaluateRange;//Main.EvaluateRange;//
 		boldness = Main.MinBoldness + Math.random() * (Main.MaxBoldness - Main.MinBoldness);
 		
 		DFAgentDescription dfd = new DFAgentDescription();

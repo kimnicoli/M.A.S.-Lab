@@ -35,7 +35,7 @@ public class PersonReceiver extends CyclicBehaviour {
 		} else {
 			switch (msg.getPerformative()) {
 				case (ACLMessage.REFUSE):{
-					System.out.println("Received refuse");
+					//System.out.println("Received refuse");
 					if(receivers.contains(msg.getSender())){
 						arrived++;
 						receivers.remove(msg.getSender());
@@ -45,7 +45,7 @@ public class PersonReceiver extends CyclicBehaviour {
 					break;
 				}
 				case (ACLMessage.PROPOSE):{
-					System.out.println("Received propose");
+					//System.out.println("Received propose");
 					if(receivers.contains(msg.getSender())){
 						arrived++;
 						receivers.remove(msg.getSender());
@@ -56,18 +56,18 @@ public class PersonReceiver extends CyclicBehaviour {
 					break;
 				}
 				case (ACLMessage.INFORM):{
-					System.out.println("Received inform from " + msg.getSender());
-					System.out.println(currentTarget);
+					//System.out.println("Received inform from " + msg.getSender());
+					//System.out.println(currentTarget);
 					
 					if(msg.getSender().equals(currentTarget)){
-						System.out.println("Starting valutation");
+						//System.out.println("Starting valutation");
 						myAgent.addBehaviour(new Evaluate(Double.parseDouble(msg.getContent()),currentTarget, this));
 						Reset();
 					}
 					break;
 				}
 				case (ACLMessage.FAILURE):{
-					System.out.println("Received failure");
+					//System.out.println("Received failure");
 					if(msg.getSender().equals(currentTarget)){
 						myAgent.addBehaviour(new Search());
 						Reset();

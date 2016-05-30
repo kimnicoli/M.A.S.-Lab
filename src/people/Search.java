@@ -51,12 +51,12 @@ public class Search extends OneShotBehaviour {
 				
 				receivers.addElement(((AID)current.getKey()));
 				
-				System.out.println("Request sent");
+				//System.out.println("Request sent");
 			}
 			
 			receiver.setReceivers(receivers);
 			
-			System.out.println("Sent " + receivers.size() + " messages");
+			//System.out.println("Sent " + receivers.size() + " messages");
 			//myAgent.addBehaviour(new Receive(receivers));
 		}
 	}

@@ -21,7 +21,7 @@ public class Evaluate extends OneShotBehaviour {
 		this.quality = quality;
 		this.place = place;
 		this.receiver = receiver;
-		System.out.println("qualcosa");
+		//System.out.println("qualcosa");
 	}
 	
 	
