@@ -74,6 +74,10 @@ public class PersonReceiver extends CyclicBehaviour {
 					}
 					break;
 				}
+				case (ACLMessage.CONFIRM):{
+					myAgent.addBehaviour(new Search());
+					break;
+				}
 				default:
 					block();
 			}

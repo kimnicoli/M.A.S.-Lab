@@ -38,12 +38,17 @@ public class RestaurantReceiver extends CyclicBehaviour {
 					if(((Restaurant)myAgent).isFree()){
 						myAgent.addBehaviour(new RestaurantSender(ACLMessage.INFORM, msg.getSender(), true));
 						//System.out.println("Sending restaurant inform");
+						((Restaurant)myAgent).fullness++;
 						block();
 					} else {
 						myAgent.addBehaviour(new RestaurantSender(ACLMessage.FAILURE, msg.getSender()));
 						//System.out.println("Sending restaurant failure");
 						block();
 					}
+					break;
+				}
+				case ACLMessage.CONFIRM:{
+					((Restaurant)myAgent).fullness = 0;
 					break;
 				}
 				default: {
