@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,11 +19,11 @@ public class Log extends OneShotBehaviour {
 	static String stringa;
 
 	TreeMap<AID, Double> restMap;
-	AID[] listRe;
+	DFAgentDescription[] listRe;
 	boolean newFile;
 	AID sender;
 
-	public Log(AID[] listRe, AID sender, TreeMap<AID, Double> restMap, boolean newFile) {
+	public Log(DFAgentDescription[] listRe, AID sender, TreeMap<AID, Double> restMap, boolean newFile) {
 
 		if (stringa == null)
 			stringa = new String();
@@ -46,7 +47,7 @@ public class Log extends OneShotBehaviour {
 				stringa = stringa.concat(entry.getKey().getName());
 				for (int i = 0; i < listRe.length; i++) {
 					stringa = stringa.concat(",");
-					stringa = stringa.concat(String.valueOf(entry.getValue().get(listRe[i])));
+					stringa = stringa.concat(String.valueOf(entry.getValue().get(listRe[i].getName())));
 				}
 			}
 
