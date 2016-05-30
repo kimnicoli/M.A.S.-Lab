@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Luca/workspace/M.A.S.-Lab/lib/jade.jar"/>
+	<classpathentry kind="lib" path="/Users/Kimnicoli/Documents/workspace/M.A.S.-Lab/lib/jade.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
