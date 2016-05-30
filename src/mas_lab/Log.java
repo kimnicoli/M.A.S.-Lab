@@ -35,13 +35,14 @@ public class Log extends OneShotBehaviour {
 		this.sender = sender;
 		this.restMap = restMap;
 
+		//System.out.println("Log init");
 	}
 
 	@Override
 	public void action() {
 		if (this.listRe != null || restMap != null) {
-			int turn = 0;// = ((Global)myAgent).getTurn();
-			stringa = stringa.concat(String.valueOf(turn));
+			int turn = ((Global)myAgent).getTurn();
+			stringa = stringa.concat(String.valueOf(turn) + ",");
 			stringa = stringa.concat(this.sender.getName());
 
 			for (int i = 0; i < listRe.length; i++) {
@@ -60,6 +61,7 @@ public class Log extends OneShotBehaviour {
 			FileWriter fstream = null;
 			try {
 				fstream = new FileWriter(aggFileName);
+				//System.out.println("created fstream");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -71,12 +73,12 @@ public class Log extends OneShotBehaviour {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			try {
+			/*try {
 				out.close();
 
 			} catch (IOException ex) {
 				Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
-			}
+			}*/
 
 			// -----------------------WRITE INFO----------------------------
 			// -----------------------WRITE INFO----------------------------
@@ -85,9 +87,10 @@ public class Log extends OneShotBehaviour {
 			String info = new String();
 			for (int i = 0; i < listRe.length; i++) {
 
-				info = info.concat(listRe[i].getName().getName());
+				info = info.concat(listRe[i].getName().getLocalName());
 				info = info.concat(",");
-
+				ServiceDescription sd = (ServiceDescription)listRe[i].getAllServices().next();
+				
 				// Iterator services = listRe[0].getAllServices();
 				// ServiceDescription service = null;
 				// double rank = 0.f;
@@ -107,6 +110,7 @@ public class Log extends OneShotBehaviour {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			out = new BufferedWriter(fstream);
 			try {
 				out.write(info);
 				out.flush();

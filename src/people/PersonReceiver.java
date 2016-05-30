@@ -61,7 +61,7 @@ public class PersonReceiver extends CyclicBehaviour {
 					
 					if(msg.getSender().equals(currentTarget)){
 						//System.out.println("Starting valutation");
-						myAgent.addBehaviour(new Evaluate(Double.parseDouble(msg.getContent()),currentTarget, this));
+						myAgent.addBehaviour(new Evaluate(myAgent, Double.parseDouble(msg.getContent()),currentTarget, this));
 						Reset();
 					}
 					break;
