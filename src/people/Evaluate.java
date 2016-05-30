@@ -1,9 +1,15 @@
 package people;
 
+import java.io.IOException;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 
 public class Evaluate extends OneShotBehaviour {
@@ -12,18 +18,39 @@ public class Evaluate extends OneShotBehaviour {
 	double quality;
 	PersonReceiver receiver;
 	
+	static AID global;
+	
 	public Evaluate (AID place) {
 		this.place = place;
 		System.out.println("qualcosa");
+		
+		if (global == null){
+			global = getGlobal();
+		}
 	}
 	
 	public Evaluate (double quality, AID place, PersonReceiver receiver) {
 		this.quality = quality;
 		this.place = place;
 		this.receiver = receiver;
-		//System.out.println("qualcosa");
+		
+		if (global == null){
+			global = getGlobal();
+		}
 	}
 	
+	AID getGlobal(){
+		DFAgentDescription dfd = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Global");
+		dfd.addServices(sd);
+		try {
+			return DFService.search(myAgent, dfd)[0].getName();
+		} catch (FIPAException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public Evaluate(Agent a) {
 		super(a);
@@ -39,45 +66,14 @@ public class Evaluate extends OneShotBehaviour {
 		System.out.println("Now I, " + myAgent.getLocalName() 
 							+ ", think of " + place.getLocalName()
 							+ " this: " +(think + dThink));
-		
-		//myAgent.addBehaviour(new Search(receiver));
-		/*ACLMessage msg = myAgent.receive();
-		if (msg == null) {
-			myAgent.addBehaviour(this);
-			block();
-			//System.out.println("Eval loop");
-		} else {
-			if(msg.getSender() == place){
-				if(msg.getPerformative() == ACLMessage.FAILURE){
-					myAgent.addBehaviour(new Search());
-					System.out.println("Received failure");
-					block();
-				} else if(msg.getPerformative() == ACLMessage.INFORM){
-					System.out.println("Received inform");
-					double quality = Double.parseDouble(msg.getContent());
-					double think = ((Person)myAgent).restMap.get(place);
-					double dThink = ((Person)myAgent).boldness * (quality - think);
-					((Person)myAgent).restMap.put(place, think + dThink);
-					
-					System.out.println("Now I, " + myAgent.getLocalName() 
-										+ ", think of " + place.getLocalName()
-										+ " this: " +(think + dThink));
-					
-					myAgent.addBehaviour(new Search());
-					block();
-				}
-			} else {
-				myAgent.addBehaviour(this);
-				block();
-			}
-		}*/
-		
+	
+		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+		msg.addReceiver(global);
+		try {
+		msg.setContentObject(((Person)myAgent).restMap);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		myAgent.send(msg);
 	}
-
-	/*@Override
-	public boolean done() {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
-
 }
