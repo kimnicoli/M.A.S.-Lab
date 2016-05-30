@@ -5,4 +5,4 @@
  * @author Luca
  *
  */
-package restaurants;
+package src.restaurants;

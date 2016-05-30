@@ -1,4 +1,4 @@
-package mas_lab;
+package src.mas_lab;
 
 import java.util.TreeMap;
 import java.io.BufferedWriter;
@@ -13,6 +13,8 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAAgentManagement.Property;
+
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -90,6 +92,9 @@ public class Log extends OneShotBehaviour {
 				info = info.concat(listRe[i].getName().getLocalName());
 				info = info.concat(",");
 				ServiceDescription sd = (ServiceDescription)listRe[i].getAllServices().next();
+				Property props = (Property)sd.getAllProperties().next();
+				
+				info = info.concat(props.getValue() + "\n");
 				
 				// Iterator services = listRe[0].getAllServices();
 				// ServiceDescription service = null;
@@ -119,7 +124,7 @@ public class Log extends OneShotBehaviour {
 				e.printStackTrace();
 			}
 
-			stringa = null;
+			//stringa = null;
 		}
 	}
 }

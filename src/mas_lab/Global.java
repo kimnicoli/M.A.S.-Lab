@@ -1,4 +1,4 @@
-package mas_lab;
+package src.mas_lab;
 
 import jade.core.Agent;
 import jade.domain.DFService;
@@ -81,7 +81,7 @@ public class Global extends Agent {
 		ContainerController cc = this.getContainerController();
 		for(int i = 0; i < Launcher.instance().getnPeople(); i++) {
 			try {
-				ac = cc.createNewAgent("Person " + i, "people.Person", null);
+				ac = cc.createNewAgent("Person " + i, "src.people.Person", null);
 				ac.start();
 			} catch(StaleProxyException e) {
 				e.printStackTrace();
