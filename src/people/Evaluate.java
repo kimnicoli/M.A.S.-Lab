@@ -20,7 +20,8 @@ public class Evaluate extends OneShotBehaviour {
 	
 	static AID global;
 	
-	public Evaluate (AID place) {
+	public Evaluate (Agent a, AID place) {
+		myAgent = a;
 		this.place = place;
 		System.out.println("qualcosa");
 		
