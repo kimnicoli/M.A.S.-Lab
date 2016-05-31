@@ -1,12 +1,17 @@
 package src.people;
 
+import java.util.Comparator;
+import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import java.util.SortedSet;
 import src.mas_lab.Main;
 
 public class Person extends Agent {

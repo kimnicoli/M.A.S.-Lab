@@ -1,6 +1,10 @@
 package src.people;
 
+import java.util.Comparator;
+import java.util.Map;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -24,8 +28,20 @@ public class Chose extends OneShotBehaviour {
 	@Override
 	public void action() {
 		if(!free.isEmpty()){
-			receiver.setCurrentTarget(free.firstEntry().getKey());
-			myAgent.addBehaviour(new Eat(free.firstEntry().getKey()));
+			SortedSet<Map.Entry<AID, Double>> sortedset = new TreeSet<Map.Entry<AID, Double>>(
+		            new Comparator<Map.Entry<AID, Double>>() {
+		                @Override
+		                public int compare(Map.Entry<AID, Double> e1,
+		                        Map.Entry<AID, Double> e2) {
+		                    return e1.getValue().compareTo(e2.getValue());
+		                }
+		            });
+			sortedset.addAll(free.entrySet());
+			
+			//receiver.setCurrentTarget(free.firstEntry().getKey());
+			//myAgent.addBehaviour(new Eat(free.firstEntry().getKey()));
+			receiver.setCurrentTarget(sortedset.first().getKey());
+			myAgent.addBehaviour(new Eat(sortedset.first().getKey()));
 			//System.out.println("Eating there");
 		} else {
 			//TODO
