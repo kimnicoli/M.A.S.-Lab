@@ -33,33 +33,6 @@ public class PersonReceiver extends CyclicBehaviour {
 		super(a);
 		// TODO Auto-generated constructor stub
 	}
-	
-	void setupFriends() {
-		DFAgentDescription pdfd = new DFAgentDescription();
-		ServiceDescription psd = new ServiceDescription();
-		psd.setType("Person");
-		pdfd.addServices(psd);
-		
-		
-		DFAgentDescription[] presults = new DFAgentDescription[0];	
-		try {
-			presults = DFService.search(myAgent, pdfd);	
-		} catch (FIPAException e) {
-			e.printStackTrace();
-		}
-		
-		for(DFAgentDescription dfd : presults)
-			((Person)myAgent).worldThrust.put(dfd.getName(), Math.random());
-		
-		while(((Person)myAgent).friends.size() < Main.MaxFriends){
-			int i = (int)(Math.random() * presults.length);
-			if(!((Person)myAgent).friends.contains(presults[i].getName()) 
-					&& !presults[i].getName().equals(myAgent.getAID()))
-				((Person)myAgent).worldThrust.put(presults[i].getName(), Math.random());
-		}
-		
-		//System.out.println(((Person)myAgent).friends.size());
-	}
 
 	@Override
 	public void action() {
@@ -99,17 +72,6 @@ public class PersonReceiver extends CyclicBehaviour {
 						myAgent.addBehaviour(new Evaluate(myAgent, Double.parseDouble(msg.getContent()),currentTarget, this));
 						Reset();
 					}
-					
-					if(msg.getOntology().equals("Reviews")){
-						Hashtable<AID, Double> map = new Hashtable<AID, Double>();
-						try {
-							map = (Hashtable<AID, Double>)msg.getContentObject();
-						} catch(UnreadableException e) {
-							e.printStackTrace();
-						}
-						myAgent.addBehaviour(new UpdateEvaluation(map, msg.getSender()));						
-					}
-					break;
 				}
 				case (ACLMessage.FAILURE):{
 					//System.out.println("Received failure");
@@ -120,8 +82,6 @@ public class PersonReceiver extends CyclicBehaviour {
 					break;
 				}
 				case (ACLMessage.CONFIRM):{
-					if(Integer.decode(msg.getContent()) == 1)
-						setupFriends();
 					myAgent.addBehaviour(new Search(this));
 					break;
 				}
