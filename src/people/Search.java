@@ -38,7 +38,7 @@ public class Search extends OneShotBehaviour {
 		                @Override
 		                public int compare(Map.Entry<AID, Double> e1,
 		                        Map.Entry<AID, Double> e2) {
-		                    return e1.getValue().compareTo(e2.getValue());
+		                    return -e1.getValue().compareTo(e2.getValue());
 		                }
 		            });
 			sortedset.addAll(((Person)myAgent).restMap.entrySet());
