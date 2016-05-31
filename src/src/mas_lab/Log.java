@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Log extends OneShotBehaviour {
+	
 	static String stringa;
 
 	TreeMap<AID, Double> restMap;
@@ -44,8 +45,8 @@ public class Log extends OneShotBehaviour {
 	public void action() {
 		if (this.listRe != null || restMap != null) {
 			int turn = ((Global)myAgent).getTurn();
-			stringa = stringa.concat(String.valueOf(turn) + ",");
-			stringa = stringa.concat(this.sender.getName());
+			stringa = stringa.concat(this.sender.getName() + ",");
+			stringa = stringa.concat(String.valueOf(turn));
 
 			for (int i = 0; i < listRe.length; i++) {
 				stringa = stringa.concat(",");
@@ -54,8 +55,10 @@ public class Log extends OneShotBehaviour {
 		}
 
 		stringa = stringa.concat("\n");
-
+		
+		//System.out.println("printing?" + newFile);
 		if (this.newFile) {
+			//System.out.println("start printing");
 			// -----------------------WRITE LOG----------------------------
 			// -----------------------WRITE LOG----------------------------
 
@@ -64,6 +67,7 @@ public class Log extends OneShotBehaviour {
 			try {
 				fstream = new FileWriter(aggFileName);
 				//System.out.println("created fstream");
+				System.out.println("created stream");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -72,6 +76,7 @@ public class Log extends OneShotBehaviour {
 				out.write(stringa);
 				out.flush();
 				out.close();
+				System.out.println("printed log");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -125,6 +130,7 @@ public class Log extends OneShotBehaviour {
 			}
 
 			//stringa = null;
+			System.exit(0);
 		}
 	}
 }
