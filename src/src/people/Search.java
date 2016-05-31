@@ -38,7 +38,7 @@ public class Search extends OneShotBehaviour {
 		                @Override
 		                public int compare(Map.Entry<AID, Double> e1,
 		                        Map.Entry<AID, Double> e2) {
-		                    return e1.getValue().compareTo(e2.getValue());
+		                    return -e1.getValue().compareTo(e2.getValue());
 		                }
 		            });
 			sortedset.addAll(((Person)myAgent).restMap.entrySet());
@@ -69,6 +69,8 @@ public class Search extends OneShotBehaviour {
 			}
 			
 			receiver.setReceivers(receivers);
+			if(receivers.size() == 0)
+				myAgent.addBehaviour(new Evaluate(myAgent, null));
 			
 			//System.out.println("Sent " + receivers.size() + " messages");
 			//myAgent.addBehaviour(new Receive(receivers));
