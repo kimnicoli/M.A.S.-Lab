@@ -1,8 +1,11 @@
 package src.people;
 
+import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.TreeMap;
 import java.util.Vector;
+
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -35,6 +38,8 @@ public class PersonReceiver extends CyclicBehaviour {
 	}
 	
 	void setupFriends() {
+		System.out.println(myAgent.getLocalName() + " is chosing friends");
+		
 		DFAgentDescription pdfd = new DFAgentDescription();
 		ServiceDescription psd = new ServiceDescription();
 		psd.setType("Person");
@@ -48,17 +53,26 @@ public class PersonReceiver extends CyclicBehaviour {
 			e.printStackTrace();
 		}
 		
+		Vector<AID> results = new Vector<AID>();
+		
+		for (int i = 0; i < presults.length; i++) {
+			results.add(presults[i].getName());
+		}
+		
 		for(DFAgentDescription dfd : presults)
 			((Person)myAgent).worldThrust.put(dfd.getName(), Math.random());
 		
 		while(((Person)myAgent).friends.size() < Main.MaxFriends){
-			int i = (int)(Math.random() * presults.length);
-			if(!((Person)myAgent).friends.contains(presults[i].getName()) 
-					&& !presults[i].getName().equals(myAgent.getAID()))
-				((Person)myAgent).worldThrust.put(presults[i].getName(), Math.random());
+			int i = (int)(Math.random() * (results.size() - 1));
+			if(!(results.get(i).equals(myAgent.getAID()))){
+				((Person)myAgent).friends.add(results.get(i));
+				results.remove(i);
+			}	
+			if(results.size() == 0)
+				break;
 		}
 		
-		//System.out.println(((Person)myAgent).friends.size());
+		System.out.println(((Person)myAgent).friends.toString());
 	}
 
 	@Override
@@ -98,9 +112,12 @@ public class PersonReceiver extends CyclicBehaviour {
 						//System.out.println("Starting evaluation");
 						myAgent.addBehaviour(new Evaluate(myAgent, Double.parseDouble(msg.getContent()),currentTarget, this));
 						Reset();
+						
 					}
 					
+					//System.out.println("Received inform");
 					if(msg.getOntology().equals("Reviews")){
+						//System.out.println("received opinion");
 						Hashtable<AID, Double> map = new Hashtable<AID, Double>();
 						try {
 							map = (Hashtable<AID, Double>)msg.getContentObject();
@@ -120,8 +137,9 @@ public class PersonReceiver extends CyclicBehaviour {
 					break;
 				}
 				case (ACLMessage.CONFIRM):{
-					if(Integer.decode(msg.getContent()) == 1)
+					if(Integer.decode(msg.getContent()) == 1){
 						setupFriends();
+					}
 					myAgent.addBehaviour(new Search(this));
 					break;
 				}
@@ -141,7 +159,7 @@ public class PersonReceiver extends CyclicBehaviour {
 
 	public void setCurrentTarget(AID currentTarget) {
 		this.currentTarget = currentTarget;
-		System.out.println("Current target: " + this.currentTarget.getLocalName());
+		//System.out.println("Current target: " + this.currentTarget.getLocalName());
 	}
 
 	public void setReceivers(Vector<AID> receivers) {

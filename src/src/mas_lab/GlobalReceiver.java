@@ -60,11 +60,11 @@ public class GlobalReceiver extends CyclicBehaviour {
 		} else {
 			switch (msg.getPerformative()) {
 				case (ACLMessage.INFORM):{
-					System.out.println("Received inform from " + msg.getSender());
+					//System.out.println("Received inform from " + msg.getSender().getLocalName());
 					//System.out.println(currentTarget);
 					
 					if(currentPeople.contains(msg.getSender())){
-						System.out.println("Received inform");
+						//System.out.println("Received inform");
 						currentPeople.remove(msg.getSender());
 						PeopleReceived ++;
 						
