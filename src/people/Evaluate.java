@@ -69,7 +69,8 @@ public class Evaluate extends OneShotBehaviour {
 		System.out.println("Now I, " + myAgent.getLocalName() 
 							+ ", think of " + place.getLocalName()
 							+ " this: " +(think + dThink));
-	
+		
+		System.out.println(((Person)myAgent).restMap);
 		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 		msg.addReceiver(global);
 		try {

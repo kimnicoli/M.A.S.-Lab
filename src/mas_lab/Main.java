@@ -15,7 +15,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Launcher.instance().InitJade(10, 10);
+		Launcher.instance().InitJade(10, 1);
 		//launch = new Launcher();
 		//launch.InitJade(5, 3);
 	}
