@@ -69,6 +69,8 @@ public class Search extends OneShotBehaviour {
 			}
 			
 			receiver.setReceivers(receivers);
+			if(receivers.size() == 0)
+				myAgent.addBehaviour(new Evaluate(myAgent, null));
 			
 			//System.out.println("Sent " + receivers.size() + " messages");
 			//myAgent.addBehaviour(new Receive(receivers));

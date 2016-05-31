@@ -33,8 +33,10 @@ public class RestaurantSender extends OneShotBehaviour {
 		ACLMessage msg = new ACLMessage(performative);
 		msg.addReceiver(receiver);
 		
-		if(ranking)
+		if(ranking){
 			msg.setContent(Double.toString(((Restaurant)myAgent).quality));
+			msg.setOntology("Ranking");
+		}
 		
 		myAgent.send(msg);
 		//System.out.println("Sent restaurant message");

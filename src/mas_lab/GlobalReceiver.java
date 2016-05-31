@@ -70,21 +70,22 @@ public class GlobalReceiver extends CyclicBehaviour {
 						
 						if(PeopleReceived == allPeople.size()){
 							if(((Global)myAgent).turn < Main.MaxTurns){
-								reset();
 								try{
 									myAgent.addBehaviour(new Log(allRArray,	msg.getSender(),
 											(TreeMap<AID, Double>)msg.getContentObject(), false));
 								} catch(Exception e) {
 									e.printStackTrace();
 								}
-							}
-							else
+								reset();
+							} else {
 								try{
 									myAgent.addBehaviour(new Log(allRArray, msg.getSender(), 
 											(TreeMap<AID, Double>)msg.getContentObject(), true));
 								} catch(UnreadableException e) {
 									e.printStackTrace();
 								}
+								System.exit(0);
+							}
 						}
 						else{
 							try{
