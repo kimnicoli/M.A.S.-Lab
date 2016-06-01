@@ -1,12 +1,19 @@
 package src.people;
 
+import java.util.Comparator;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Vector;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import java.util.SortedSet;
 import src.mas_lab.Main;
 
 public class Person extends Agent {
@@ -15,11 +22,16 @@ public class Person extends Agent {
 	double maxValue; //Consideriamo una scala di valutazione inversa. Perché la TreeMap ordina dal più basso al più alto
 	double boldness;
 	
+	Hashtable<AID, Double> worldThrust;
+	Vector<AID> friends; 
+	
 	protected void setup() {
 		
 		restMap = new TreeMap();
 		maxValue = Main.EvaluateRange;//Math.random() * Main.EvaluateRange;//
 		boldness = Main.MinBoldness + Math.random() * (Main.MaxBoldness - Main.MinBoldness);
+		worldThrust = new Hashtable<AID, Double>();
+		friends = new Vector<AID>();
 		
 		DFAgentDescription dfd = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();

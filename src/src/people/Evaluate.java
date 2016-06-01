@@ -1,6 +1,7 @@
 package src.people;
 
 import java.io.IOException;
+import java.util.Hashtable;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -20,7 +21,8 @@ public class Evaluate extends OneShotBehaviour {
 	
 	static AID global;
 	
-	public Evaluate (AID place) {
+	public Evaluate (Agent a, AID place) {
+		myAgent = a;
 		this.place = place;
 		System.out.println("qualcosa");
 		
@@ -69,7 +71,8 @@ public class Evaluate extends OneShotBehaviour {
 		System.out.println("Now I, " + myAgent.getLocalName() 
 							+ ", think of " + place.getLocalName()
 							+ " this: " +(think + dThink));
-	
+		
+		//System.out.println(((Person)myAgent).restMap);
 		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 		msg.addReceiver(global);
 		try {
@@ -79,5 +82,21 @@ public class Evaluate extends OneShotBehaviour {
 			e.printStackTrace();
 		}
 		myAgent.send(msg);
+		
+		ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
+		msg2.setOntology("Reviews");
+		Hashtable<AID, Double> map = new Hashtable<AID, Double>();
+		map.put(place, ((Person)myAgent).restMap.get(place));
+		try {
+			msg2.setContentObject(map);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		for(AID address : ((Person)myAgent).friends) {
+			msg2.addReceiver(address);
+		}
+		myAgent.send(msg2);
+		//System.out.println("Sent opinion");
 	}
 }
