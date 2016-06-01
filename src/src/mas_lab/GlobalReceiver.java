@@ -73,6 +73,7 @@ public class GlobalReceiver extends CyclicBehaviour {
 								try{
 									myAgent.addBehaviour(new Log(allRArray,	msg.getSender(),
 											(TreeMap<AID, Double>)msg.getContentObject(), false));
+									//block();
 								} catch(Exception e) {
 									e.printStackTrace();
 								}
@@ -81,16 +82,19 @@ public class GlobalReceiver extends CyclicBehaviour {
 								try{
 									myAgent.addBehaviour(new Log(allRArray, msg.getSender(), 
 											(TreeMap<AID, Double>)msg.getContentObject(), true));
+									//System.out.println("printing log");
+									//block();
 								} catch(UnreadableException e) {
 									e.printStackTrace();
 								}
-								System.exit(0);
+								//System.exit(0);
 							}
 						}
 						else{
 							try{
 								myAgent.addBehaviour(new Log(allRArray,	msg.getSender(),
 										(TreeMap<AID, Double>)msg.getContentObject(), false));
+								//block();
 							} catch(Exception e) {
 								e.printStackTrace();
 							}
