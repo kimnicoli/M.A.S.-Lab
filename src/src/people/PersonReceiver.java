@@ -60,7 +60,7 @@ public class PersonReceiver extends CyclicBehaviour {
 		}
 		
 		for(DFAgentDescription dfd : presults)
-			((Person)myAgent).worldThrust.put(dfd.getName(), Math.random());
+			((Person)myAgent).worldTrust.put(dfd.getName(), Math.random());
 		
 		while(((Person)myAgent).friends.size() < Main.MaxFriends){
 			int i = (int)(Math.random() * (results.size() - 1));

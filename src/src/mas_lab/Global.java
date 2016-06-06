@@ -12,8 +12,19 @@ import jade.wrapper.StaleProxyException;
 public class Global extends Agent {
 	
 	int turn;
+	int nPeople;
+	int nRestaurants;
 	
 	protected void setup() {
+		Object[] args = getArguments();
+		/*
+		 * Formattazione:
+		 * args[0] : int nRestaurant
+		 * args[1] : int nPeople
+		 */
+		nRestaurants = (Integer)args[0];
+		nPeople = (Integer)args[1];
+		
 		DFAgentDescription mydfd = new DFAgentDescription();
 		ServiceDescription mysd = new ServiceDescription();
 		mysd.setType("Global");
@@ -25,6 +36,7 @@ public class Global extends Agent {
 			e.printStackTrace();
 		}
 		
+		InitRestaurants();
 		
 		DFAgentDescription[] results = new DFAgentDescription[0];
 		DFAgentDescription dfd = new DFAgentDescription();
@@ -34,7 +46,7 @@ public class Global extends Agent {
 		
 		//Launcher.instance().InitRestaurants();
 		
-		while(results.length < Launcher.instance().getnRestaurants()) {		
+		while(results.length < nRestaurants) {		
 			try {
 				results = DFService.search(this, dfd);
 				
@@ -43,7 +55,7 @@ public class Global extends Agent {
 			}
 		}
 		
-		System.out.println("outta here, with " + Launcher.instance().getnRestaurants());
+		System.out.println("outta here, with " + nRestaurants);
 		
 		try{
 			InitPeople();
@@ -61,7 +73,7 @@ public class Global extends Agent {
 		
 		DFAgentDescription[] presults = new DFAgentDescription[0];
 		
-		while(presults.length < Launcher.instance().getnPeople()) {		
+		while(presults.length < nPeople) {		
 			try {
 				presults = DFService.search(this, pdfd);
 				
@@ -76,10 +88,23 @@ public class Global extends Agent {
 		addBehaviour(new GlobalReceiver(this, presults, results));
 	}
 	
+	public void InitRestaurants () {
+		AgentController ac;
+		ContainerController cc = this.getContainerController();
+		for(int i = 0; i < nRestaurants; i++) {
+			try {
+				ac = cc.createNewAgent("Restaurant " + i, "src.restaurants.Restaurant", null);
+				ac.start();
+			} catch(StaleProxyException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public void InitPeople () {		
 		AgentController ac;
 		ContainerController cc = this.getContainerController();
-		for(int i = 0; i < Launcher.instance().getnPeople(); i++) {
+		for(int i = 0; i < nPeople; i++) {
 			try {
 				ac = cc.createNewAgent("Person " + i, "src.people.Person", null);
 				ac.start();

@@ -12,6 +12,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import src.mas_lab.Main;
 
 public class Evaluate extends OneShotBehaviour {
 
@@ -72,6 +73,16 @@ public class Evaluate extends OneShotBehaviour {
 							+ ", think of " + place.getLocalName()
 							+ " this: " +(think + dThink));
 		
+		//Mappa locale di tutte le persone che mi hanno parlato di place (bene o male)
+		Hashtable<AID, Double> map = ((Person)myAgent).opinions.get(place);
+		for(AID person : map.keySet()){
+			double myTrust = ((Person)myAgent).worldTrust.get(person);
+			double difference = Math.abs(think + dThink - map.get(person))/Main.EvaluateRange;
+			double newTrust = 1 - difference;
+			myTrust = 0.5*(myTrust + newTrust);
+			((Person)myAgent).worldTrust.put(person, myTrust);
+		}
+		
 		//System.out.println(((Person)myAgent).restMap);
 		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 		msg.addReceiver(global);
@@ -85,7 +96,7 @@ public class Evaluate extends OneShotBehaviour {
 		
 		ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
 		msg2.setOntology("Reviews");
-		Hashtable<AID, Double> map = new Hashtable<AID, Double>();
+		map = new Hashtable<AID, Double>();
 		map.put(place, ((Person)myAgent).restMap.get(place));
 		try {
 			msg2.setContentObject(map);
