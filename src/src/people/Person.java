@@ -22,16 +22,19 @@ public class Person extends Agent {
 	double maxValue; //Consideriamo una scala di valutazione inversa. Perché la TreeMap ordina dal più basso al più alto
 	double boldness;
 	
-	Hashtable<AID, Double> worldThrust;
-	Vector<AID> friends; 
+	Hashtable<AID, Double> worldTrust;
+	Vector<AID> friends;
+	
+	Hashtable<AID, Hashtable<AID, Double>> opinions;
 	
 	protected void setup() {
 		
 		restMap = new TreeMap();
 		maxValue = Main.EvaluateRange;//Math.random() * Main.EvaluateRange;//
 		boldness = Main.MinBoldness + Math.random() * (Main.MaxBoldness - Main.MinBoldness);
-		worldThrust = new Hashtable<AID, Double>();
+		worldTrust = new Hashtable<AID, Double>();
 		friends = new Vector<AID>();
+		opinions = new Hashtable<AID, Hashtable<AID,Double>>();
 		
 		DFAgentDescription dfd = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
@@ -48,6 +51,7 @@ public class Person extends Agent {
 		
 		for (DFAgentDescription result : results){
 			restMap.put(result.getName(), Math.random() * Main.EvaluateRange);
+			opinions.put(result.getName(), new Hashtable<AID, Double>());
 		}
 		
 		DFAgentDescription mydfd = new DFAgentDescription();

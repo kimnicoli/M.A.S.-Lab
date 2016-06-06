@@ -10,16 +10,13 @@ public class Main {
 	
 	public static int MaxFriends = 10;
 
-	//public static Launcher launch;
-	
 	public Main() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public static void main(String[] args) {
-		Launcher.instance().InitJade(10, 30);
-		//launch = new Launcher();
-		//launch.InitJade(5, 3);
+		Launcher launcher = new Launcher();
+		launcher.InitJade(10, 30);
 	}
 
 }

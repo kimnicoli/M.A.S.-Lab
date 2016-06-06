@@ -1,6 +1,7 @@
 package src.people;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -26,8 +27,12 @@ public class UpdateEvaluation extends OneShotBehaviour {
 		for(AID address : map.keySet()){
 			System.out.println("Received opinion from" + sender.getLocalName());
 			
+			//Aggiungo l'opinione di sender alla mia lista di opinioni per 
+			//		poter valutare la sua affidabilità in futuro
+			((Person)myAgent).opinions.get(address).put(sender, map.get(address));
+			
 			double think = ((Person)myAgent).restMap.get(address);
-			double ratio = ((Person)myAgent).worldThrust.get(sender);
+			double ratio = ((Person)myAgent).worldTrust.get(sender);
 			double meanThink = (map.get(address)*ratio + think)/(1 + ratio);
 			((Person)myAgent).restMap.put(address, meanThink);
 			
