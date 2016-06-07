@@ -3,6 +3,8 @@ package src.mas_lab;
 import java.util.TreeMap;
 import java.util.Vector;
 
+import org.json.simple.JSONObject;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -12,6 +14,10 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
+import org.json.simple.parser.JSONParser;
+
+import org.json.simple.parser.ParseException;
+
 import src.people.Chose;
 import src.people.Evaluate;
 import src.people.Person;
@@ -26,6 +32,8 @@ public class GlobalReceiver extends CyclicBehaviour {
 	DFAgentDescription[] allRArray;
 	int PeopleReceived;
 	int RestaurantReceived;
+	JSONObject peopleSetup;
+	JSONObject restaurantsSetup;
 
 	public GlobalReceiver(Agent a, DFAgentDescription[] allPeople, DFAgentDescription[] allRestaurants) {
 		super(a);
@@ -42,8 +50,12 @@ public class GlobalReceiver extends CyclicBehaviour {
 			if(dfd != null)
 				this.allRestaurants.add(dfd);
 		
-
+		
 		reset();
+		
+		peopleSetup = new JSONObject();
+		restaurantsSetup = new JSONObject();
+		
 	}
 	
 	public GlobalReceiver(Agent a) {
@@ -102,6 +114,31 @@ public class GlobalReceiver extends CyclicBehaviour {
 						
 						
 					}
+					break;
+				}
+				
+				case (ACLMessage.CONFIRM): {
+					String sender = msg.getSender().getLocalName();
+					JSONParser parser = new JSONParser();
+					try {
+						//JSONObject obj = (JSONObject)parser.parse(msg.getContent());
+						Object obj = parser.parse(msg.getContent());
+						if(sender.split(" ")[0].equals("Person")){
+							peopleSetup.put(sender, obj);
+						}
+						else if (sender.split(" ")[0].equals("Restaurant")){
+							restaurantsSetup.put(sender, obj);
+						}
+					} catch(ParseException e) {
+						e.printStackTrace();
+					}
+					
+					if(peopleSetup.size() == ((Global)myAgent).nPeople)
+						System.out.println(peopleSetup);
+					
+					if(restaurantsSetup.size() == ((Global)myAgent).nRestaurants)
+						System.out.println(restaurantsSetup);
+					
 					break;
 				}
 				

@@ -27,18 +27,24 @@ public class PersonReceiver extends CyclicBehaviour {
 	TreeMap<AID, Double> free;
 	Vector<AID> receivers;
 	
-	public PersonReceiver() {
-		free = new TreeMap<AID, Double>();
-		receivers = new Vector<AID>();
-	}
-
+	static AID global;
+	
 	public PersonReceiver(Agent a) {
 		super(a);
-		// TODO Auto-generated constructor stub
+		free = new TreeMap<AID, Double>();
+		receivers = new Vector<AID>();
+		if (global == null){
+			global = getGlobal();
+		}
 	}
+
+	/*public PersonReceiver(Agent a) {
+		super(a);
+		// TODO Auto-generated constructor stub
+	}*/
 	
 	void setupFriends() {
-		System.out.println(myAgent.getLocalName() + " is chosing friends");
+		//System.out.println(myAgent.getLocalName() + " is chosing friends");
 		
 		DFAgentDescription pdfd = new DFAgentDescription();
 		ServiceDescription psd = new ServiceDescription();
@@ -72,7 +78,7 @@ public class PersonReceiver extends CyclicBehaviour {
 				break;
 		}
 		
-		System.out.println(((Person)myAgent).friends.toString());
+		//System.out.println(((Person)myAgent).friends.toString());
 	}
 
 	@Override
@@ -137,9 +143,14 @@ public class PersonReceiver extends CyclicBehaviour {
 					break;
 				}
 				case (ACLMessage.CONFIRM):{
-					if(Integer.decode(msg.getContent()) == 1){
+					if(Integer.decode(msg.getContent()) == 1 & !((Person)myAgent).fromFile){
 						setupFriends();
 					}
+					//System.out.println(myAgent.getLocalName() + "\n" +((Person)myAgent).Encode());
+					ACLMessage JSONmsg = new ACLMessage(ACLMessage.CONFIRM);
+					JSONmsg.addReceiver(global);
+					JSONmsg.setContent(((Person)myAgent).Encode().toJSONString());
+					myAgent.send(JSONmsg);
 					myAgent.addBehaviour(new Search(this));
 					break;
 				}
@@ -168,4 +179,18 @@ public class PersonReceiver extends CyclicBehaviour {
 		arrived = 0;
 	}
 
+	AID getGlobal(){
+		DFAgentDescription dfd = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Global");
+		dfd.addServices(sd);
+		try {
+			AID gAID = DFService.search(myAgent, dfd)[0].getName();
+			//System.out.println(gAID.getName());
+			return gAID;
+		} catch (FIPAException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

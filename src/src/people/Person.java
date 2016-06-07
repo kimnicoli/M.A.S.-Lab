@@ -1,11 +1,16 @@
 package src.people;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Vector;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -26,6 +31,8 @@ public class Person extends Agent {
 	Vector<AID> friends;
 	
 	Hashtable<AID, Hashtable<AID, Double>> opinions;
+	
+	boolean fromFile;
 	
 	protected void setup() {
 		
@@ -65,9 +72,87 @@ public class Person extends Agent {
 			e.printStackTrace();
 		}
 		
-		PersonReceiver receiver = new PersonReceiver();
+		fromFile = false;
+		Object[] args = getArguments();
+		if(args[0] != null){
+			Decode((JSONObject)args[0]);
+			fromFile = true;
+		}
+		
+		PersonReceiver receiver = new PersonReceiver(this);
 		addBehaviour(receiver);
 		//addBehaviour(new Search(receiver));
 		
+	}
+	
+	public JSONObject Encode() {
+		JSONObject extObj = new JSONObject();
+		
+		extObj.put("maxValue", maxValue);
+		extObj.put("boldness", boldness);
+		
+		Vector<String> friends = new Vector<String>();		
+		for(AID address : this.friends){
+			friends.add(address.getLocalName());
+		}
+		extObj.put("friends", friends);
+		
+		Hashtable<String, Double> localMap = new Hashtable<String, Double>();
+		for(AID address : this.worldTrust.keySet()){
+			localMap.put(address.getLocalName(), this.worldTrust.get(address));
+		}
+		JSONObject wTobj = new JSONObject();
+		wTobj.putAll(localMap);
+		extObj.put("worldTrust", wTobj);
+		
+		localMap.clear();
+		for(AID address : this.restMap.keySet()){
+			localMap.put(address.getLocalName(), this.restMap.get(address));
+		}
+		JSONObject rMObj = new JSONObject();
+		rMObj.putAll(localMap);
+		extObj.put("restMap", rMObj);
+		
+		return extObj;
+	}
+	
+	void Decode(JSONObject obj) {
+		System.out.println("Loading json");
+		if(obj != null){
+			System.err.println("Loading json");
+			maxValue = (Double)obj.get("maxValue");
+			boldness = (Double)obj.get("boldness");
+			
+			this.friends.clear();
+			//Vector<String> friends = (Vector<String>)obj.get("friends");
+			JSONArray friends = (JSONArray)obj.get("friends");
+			/*/for(String name : friends.toArray()){
+				this.friends.add(new AID(name, true));
+			}*/
+			
+			String address = null;
+			try {
+				address = "@" + InetAddress.getLocalHost().getHostAddress() + ":1099/JADE";
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+			
+			for(int i = 0; i < friends.size(); i++){
+				this.friends.add(new AID(((String)friends.get(i)) + address, true));
+			}
+			
+			this.worldTrust.clear();
+			JSONObject wTobj = (JSONObject)obj.get("worldTrust");
+			for(Object key : wTobj.keySet()){
+				this.worldTrust.put(new AID((String)key + address, true), (Double)wTobj.get(key));
+			}
+			
+			this.restMap.clear();
+			JSONObject rMObj = (JSONObject)obj.get("restMap");
+			for(Object key : rMObj.keySet()){
+				//System.out.println(new AID((String)key + address, true));
+				this.restMap.put(new AID((String)key + address, true), (Double)rMObj.get(key));
+			}
+		}
 	}
 }

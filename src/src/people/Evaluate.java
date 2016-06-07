@@ -67,20 +67,31 @@ public class Evaluate extends OneShotBehaviour {
 	public void action() {
 		double think = ((Person)myAgent).restMap.get(place);
 		double dThink = ((Person)myAgent).boldness * (quality - think);
-		((Person)myAgent).restMap.put(place, think + dThink);
+		
+		think += dThink + (0.5 - Math.random())*Main.RandomEvalutation;
+		if(think < 0)
+			think = 0;
+		else if (think > Main.EvaluateRange)
+			think = Main.EvaluateRange;
+		
+		((Person)myAgent).restMap.put(place, think);
 		
 		System.out.println("Now I, " + myAgent.getLocalName() 
 							+ ", think of " + place.getLocalName()
-							+ " this: " +(think + dThink));
+							+ " this: " +(think));
 		
 		//Mappa locale di tutte le persone che mi hanno parlato di place (bene o male)
 		Hashtable<AID, Double> map = ((Person)myAgent).opinions.get(place);
 		for(AID person : map.keySet()){
 			double myTrust = ((Person)myAgent).worldTrust.get(person);
-			double difference = Math.abs(think + dThink - map.get(person))/Main.EvaluateRange;
+			//System.err.println("I, " + myAgent.getLocalName() + ", thought of " + person.getLocalName()
+			//+ " this: " + myTrust);
+			double difference = Math.abs(think - map.get(person))/Main.EvaluateRange;
 			double newTrust = 1 - difference;
 			myTrust = 0.5*(myTrust + newTrust);
 			((Person)myAgent).worldTrust.put(person, myTrust);
+			//System.err.println("Now I, " + myAgent.getLocalName() + ", think of " + person.getLocalName()
+			//+ " this: " + myTrust);
 		}
 		
 		//System.out.println(((Person)myAgent).restMap);
