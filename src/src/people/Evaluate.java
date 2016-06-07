@@ -25,7 +25,7 @@ public class Evaluate extends OneShotBehaviour {
 	public Evaluate (Agent a, AID place) {
 		myAgent = a;
 		this.place = place;
-		System.out.println("qualcosa");
+		//System.out.println("qualcosa");
 		
 		if (global == null){
 			global = getGlobal();
@@ -76,9 +76,9 @@ public class Evaluate extends OneShotBehaviour {
 		
 		((Person)myAgent).restMap.put(place, think);
 		
-		System.out.println("Now I, " + myAgent.getLocalName() 
-							+ ", think of " + place.getLocalName()
-							+ " this: " +(think));
+		//System.out.println("Now I, " + myAgent.getLocalName() 
+		//					+ ", think of " + place.getLocalName()
+		//					+ " this: " +(think));
 		
 		//Mappa locale di tutte le persone che mi hanno parlato di place (bene o male)
 		Hashtable<AID, Double> map = ((Person)myAgent).opinions.get(place);
@@ -98,7 +98,11 @@ public class Evaluate extends OneShotBehaviour {
 		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 		msg.addReceiver(global);
 		try {
-			msg.setContentObject(((Person)myAgent).restMap);
+                        Object[] objsend = new Object[3];
+                        objsend[0] = ((Person)myAgent).worldTrust;
+                        objsend[1] = ((Person)myAgent).restMap;
+                        
+			msg.setContentObject(objsend);
 			//System.out.println("sent map");
 		} catch(IOException e) {
 			e.printStackTrace();
