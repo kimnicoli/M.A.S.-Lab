@@ -8,10 +8,12 @@ public class Main {
 	public static double MaxBoldness = 1.0;
 	public static int MaxTurns = 5;
 	
-	public static double RandomEvalutation = 1.0;
+	public static double RandomEvaluation = 1.0;
+	public static double RandomFuzzyEvaluation = 0.1;
 	
 	public static double RandomChoose = 	0.1;
 	public static double RandomGoToFirst = 0.1;
+	
 			
 	public static int MaxFriends = 2;
 
