@@ -83,8 +83,8 @@ public class GlobalReceiver extends CyclicBehaviour {
 						if(PeopleReceived == allPeople.size()){
 							if(((Global)myAgent).turn < Main.MaxTurns){
 								try{
-									myAgent.addBehaviour(new Log(allRArray,	msg.getSender(),
-											(TreeMap<AID, Double>)msg.getContentObject(), false));
+									myAgent.addBehaviour(new Log(allRArray,	msg.getSender(), false,
+											(Object[])msg.getContentObject()));
 									//block();
 								} catch(Exception e) {
 									e.printStackTrace();
@@ -92,8 +92,8 @@ public class GlobalReceiver extends CyclicBehaviour {
 								reset();
 							} else {
 								try{
-									myAgent.addBehaviour(new Log(allRArray, msg.getSender(), 
-											(TreeMap<AID, Double>)msg.getContentObject(), true));
+									myAgent.addBehaviour(new Log(allRArray,	msg.getSender(), true,
+											(Object[])msg.getContentObject()));
 									//System.out.println("printing log");
 									//block();
 								} catch(UnreadableException e) {
@@ -104,8 +104,8 @@ public class GlobalReceiver extends CyclicBehaviour {
 						}
 						else{
 							try{
-								myAgent.addBehaviour(new Log(allRArray,	msg.getSender(),
-										(TreeMap<AID, Double>)msg.getContentObject(), false));
+								myAgent.addBehaviour(new Log(allRArray,	msg.getSender(), false,
+											(Object[])msg.getContentObject()));
 								//block();
 							} catch(Exception e) {
 								e.printStackTrace();
