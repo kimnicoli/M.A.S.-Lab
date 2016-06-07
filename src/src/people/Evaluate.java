@@ -101,6 +101,7 @@ public class Evaluate extends OneShotBehaviour {
                         Object[] objsend = new Object[3];
                         objsend[0] = ((Person)myAgent).worldTrust;
                         objsend[1] = ((Person)myAgent).restMap;
+                        objsend[2] = place;
                         
 			msg.setContentObject(objsend);
 			//System.out.println("sent map");

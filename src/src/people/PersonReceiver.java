@@ -177,6 +177,7 @@ public class PersonReceiver extends CyclicBehaviour {
 	public void setCurrentTarget(AID currentTarget) {
 		this.currentTarget = currentTarget;
 		//System.out.println("Current target: " + this.currentTarget.getLocalName());
+		//ACLMessage msg = new ACLMessage(ACLMessage.);
 	}
 
 	public void setReceivers(Vector<AID> receivers) {
