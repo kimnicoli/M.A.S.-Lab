@@ -105,6 +105,12 @@ public class PersonReceiver extends CyclicBehaviour {
 						arrived++;
 						receivers.remove(msg.getSender());
 						free.put(msg.getSender(), ((Person)myAgent).restMap.get(msg.getSender()));
+						if(Math.random() < Main.RandomGoToFirst & arrived == 1){
+							receivers.clear();
+							setCurrentTarget(msg.getSender());
+							myAgent.addBehaviour(new Eat(currentTarget));
+							System.err.println("!!Too lazy to wait!!");
+						}
 					}
 					if(arrived == maxReceivers)
 						myAgent.addBehaviour(new Chose(this, free));
@@ -171,6 +177,7 @@ public class PersonReceiver extends CyclicBehaviour {
 	public void setCurrentTarget(AID currentTarget) {
 		this.currentTarget = currentTarget;
 		//System.out.println("Current target: " + this.currentTarget.getLocalName());
+		//ACLMessage msg = new ACLMessage(ACLMessage.);
 	}
 
 	public void setReceivers(Vector<AID> receivers) {
