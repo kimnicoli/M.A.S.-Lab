@@ -123,13 +123,6 @@ public class Person extends Agent {
 			maxValue = (Double)obj.get("maxValue");
 			boldness = (Double)obj.get("boldness");
 			
-			this.friends.clear();
-			//Vector<String> friends = (Vector<String>)obj.get("friends");
-			JSONArray friends = (JSONArray)obj.get("friends");
-			/*/for(String name : friends.toArray()){
-				this.friends.add(new AID(name, true));
-			}*/
-			
 			String address = null;
 			try {
 				address = "@" + InetAddress.getLocalHost().getHostAddress() + ":1099/JADE";
@@ -137,6 +130,8 @@ public class Person extends Agent {
 				e.printStackTrace();
 			}
 			
+			this.friends.clear();
+			JSONArray friends = (JSONArray)obj.get("friends");
 			for(int i = 0; i < friends.size(); i++){
 				this.friends.add(new AID(((String)friends.get(i)) + address, true));
 			}

@@ -12,8 +12,6 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import src.mas_lab.Main;
 
-import static java.lang.Math.toIntExact;
-
 public class Restaurant extends Agent {
 
 	double quality;
@@ -92,7 +90,7 @@ public class Restaurant extends Agent {
 	void Decode(JSONObject obj) {
 		if(obj != null){
 			quality = (Double)obj.get("quality");
-			capacity = toIntExact((Long)obj.get("capacity"));
+			capacity = ((Long)obj.get("capacity")).intValue();
 		}
 	}
 	

@@ -6,10 +6,13 @@ public class Main {
 	public static int MaxCapacity = 20;
 	public static double MinBoldness = 0.0;
 	public static double MaxBoldness = 1.0;
-	public static int MaxTurns = 0;
+	public static int MaxTurns = 5;
 	
 	public static double RandomEvalutation = 1.0;
 	
+	public static double RandomChoose = 	0.1;
+	public static double RandomGoToFirst = 0.1;
+			
 	public static int MaxFriends = 2;
 
 	public Main() {
