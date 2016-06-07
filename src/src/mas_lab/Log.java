@@ -30,9 +30,9 @@ public class Log extends OneShotBehaviour {
 	static int TURNO = -1;
 	static double[][] matriceT;
 
-	//static Set<AID> listPe;
+	// static Set<AID> listPe;
 	static AID[] listPe;
-	
+
 	TreeMap<AID, Double> restMap;
 	Hashtable<AID, Double> trustMap;
 	DFAgentDescription[] listRe;
@@ -53,8 +53,8 @@ public class Log extends OneShotBehaviour {
 		this.sender = sender;
 		this.restMap = (TreeMap<AID, Double>) objArr[1];
 		this.trustMap = (Hashtable<AID, Double>) objArr[0];
-		this.target = (String)objArr[2];
-               
+		this.target = (String) objArr[2];
+
 		if (listPe == null)
 			listPe = trustMap.keySet().toArray(new AID[0]);
 	}
@@ -63,15 +63,16 @@ public class Log extends OneShotBehaviour {
 	public void action() {
 		// -----------------------LOG TARGET----------------------------
 		// -----------------------LOG TARGET----------------------------
-	
-                if (this.target != null) {
+
+		if (this.target != null) {
+			if(stringaTarget == null)
+				stringaTarget = new String();
 			int turn = ((Global) myAgent).getTurn();
-//			stringaTarget = stringaTarget.concat(this.sender.getName() + ",");
+			stringaTarget = stringaTarget.concat(this.sender.getName() + ",");
 			stringaTarget = stringaTarget.concat(String.valueOf(turn));
 			stringaTarget = stringaTarget.concat(target + ",");
 			stringaTarget = stringaTarget.concat("\n");
 		}
-              
 
 		// -----------------------LOG RESTMAP----------------------------
 		// -----------------------LOG RESTMAP----------------------------
@@ -128,8 +129,8 @@ public class Log extends OneShotBehaviour {
 
 			// riempi la matrice
 			for (int ii = 0; ii < nPer; ii++) {
-				if(listPe[ii].equals(sender)){
-					for(int i = 0; i < nPer; i++)
+				if (listPe[ii].equals(sender)) {
+					for (int i = 0; i < nPer; i++)
 						matriceT[ii][i] = trustMap.get(listPe[ii]);
 					break;
 				}
@@ -160,21 +161,20 @@ public class Log extends OneShotBehaviour {
 			// TARGET----------------------------
 			// // -----------------------WRITE
 			// TARGET----------------------------
-			 String aggFileNameTarget = "agg-" +
-			 String.valueOf("LOGTARGET.csv");
-			 try {
-			 fstream = new FileWriter(aggFileNameTarget);
-			 } catch (IOException e) {
-			 e.printStackTrace();
-			 }
-			 out = new BufferedWriter(fstream);
-			 try {
-			 out.write(stringaTarget);
-			 out.flush();
-			 out.close();
-			 } catch (IOException e) {
-			 e.printStackTrace();
-			 }
+			String aggFileNameTarget = "agg-" + String.valueOf("LOGTARGET.csv");
+			try {
+				fstream = new FileWriter(aggFileNameTarget);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			out = new BufferedWriter(fstream);
+			try {
+				out.write(stringaTarget);
+				out.flush();
+				out.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 			// -----------------------WRITE TRUSTMAP----------------------------
 			// -----------------------WRITE TRUSTMAP----------------------------
