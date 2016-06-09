@@ -38,13 +38,13 @@ public class Chose extends OneShotBehaviour {
 		                    return -e1.getValue().compareTo(e2.getValue());
 		                }
 		            });
-			
-			if(Math.random()*(1 - Main.RandomGoToFirst) > Main.RandomChoose){
+			double random = Math.random();
+			if(random > Main.ProbChooseBFF + Main.ProbChoseRandom){
 				sortedset.addAll(free.entrySet());
 				receiver.setCurrentTarget(sortedset.first().getKey());
 				myAgent.addBehaviour(new Eat(sortedset.first().getKey()));
 				System.err.println("!!Normal choice!!");
-			} else {
+			} else if(random < Main.ProbChooseBFF){
 				sortedset.addAll(((Person)myAgent).worldTrust.entrySet());
 				AID bff = null;
 				while(!((Person)myAgent).friends.contains(bff)){
@@ -76,7 +76,7 @@ public class Chose extends OneShotBehaviour {
 					receiver.setCurrentTarget(target);
 					myAgent.addBehaviour(new Eat(target));
 					
-					System.err.println("!!RRRRandom Choose!!");
+					System.err.println("!!BFF Choose!!");
 				} else {
 					sortedset.clear();
 					sortedset.addAll(free.entrySet());
@@ -85,6 +85,16 @@ public class Chose extends OneShotBehaviour {
 					System.err.println("!!Normal choice!!");
 					return;
 				}
+			} else {
+				int rndIndex = (int)(Math.random()*free.size());
+				if(rndIndex >= free.size())
+					rndIndex = free.size() - 1;
+				else if (rndIndex < 0)
+					rndIndex = 0;
+				AID chosenOne = free.keySet().toArray(new AID[0])[rndIndex];
+				receiver.setCurrentTarget(chosenOne);
+				myAgent.addBehaviour(new Eat(chosenOne));
+				System.err.println("!!Random choice!!");
 			}
 			
 		} else {
