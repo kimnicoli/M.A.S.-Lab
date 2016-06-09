@@ -12,7 +12,8 @@ public class UpdateEvaluation extends OneShotBehaviour {
 	Hashtable<AID, Double> map;
 	AID sender;
 	
-	public UpdateEvaluation(Hashtable<AID, Double> map, AID sender) {
+	public UpdateEvaluation(Agent a, Hashtable<AID, Double> map, AID sender) {
+		myAgent = a;
 		this.map = map;
 		this.sender = sender;
 	}

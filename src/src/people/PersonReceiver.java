@@ -136,7 +136,7 @@ public class PersonReceiver extends CyclicBehaviour {
 						} catch(UnreadableException e) {
 							e.printStackTrace();
 						}
-						myAgent.addBehaviour(new UpdateEvaluation(map, msg.getSender()));						
+						myAgent.addBehaviour(new UpdateEvaluation(myAgent, map, msg.getSender()));						
 					}
 					break;
 				}
