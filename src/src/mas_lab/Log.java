@@ -68,8 +68,8 @@ public class Log extends OneShotBehaviour {
 			if(stringaTarget == null)
 				stringaTarget = new String();
 			int turn = ((Global) myAgent).getTurn();
-			stringaTarget = stringaTarget.concat(this.sender.getName() + ",");
-			stringaTarget = stringaTarget.concat(String.valueOf(turn));
+			stringaTarget = stringaTarget.concat(this.sender.getLocalName() + ",");
+			stringaTarget = stringaTarget.concat(String.valueOf(turn)+ ",");
 			stringaTarget = stringaTarget.concat(target + ",");
 			stringaTarget = stringaTarget.concat("\n");
 		}
@@ -78,7 +78,7 @@ public class Log extends OneShotBehaviour {
 		// -----------------------LOG RESTMAP----------------------------
 		if (this.listRe != null || restMap != null) {
 			int turn = ((Global) myAgent).getTurn();
-			stringa = stringa.concat(this.sender.getName() + ",");
+			stringa = stringa.concat(this.sender.getLocalName() + ",");
 			stringa = stringa.concat(String.valueOf(turn));
 
 			for (int i = 0; i < listRe.length; i++) {
