@@ -125,7 +125,7 @@ public class Evaluate extends OneShotBehaviour {
 		objsend[0] = ((Person) myAgent).worldTrust;
 		objsend[1] = ((Person) myAgent).restMap;
 		if(place != null)
-			objsend[2] = place.getName();
+			objsend[2] = place.getLocalName();
 		else
 			objsend[2] = "Nowhere -1";
 		try {
