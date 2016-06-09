@@ -1,5 +1,8 @@
 package src.mas_lab;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.TreeMap;
 import java.util.Vector;
 
@@ -34,6 +37,9 @@ public class GlobalReceiver extends CyclicBehaviour {
 	int RestaurantReceived;
 	JSONObject peopleSetup;
 	JSONObject restaurantsSetup;
+	
+	static boolean printedPeople;
+	static boolean printedRestaurants;
 
 	public GlobalReceiver(Agent a, DFAgentDescription[] allPeople, DFAgentDescription[] allRestaurants) {
 		super(a);
@@ -55,6 +61,8 @@ public class GlobalReceiver extends CyclicBehaviour {
 		
 		peopleSetup = new JSONObject();
 		restaurantsSetup = new JSONObject();
+		printedPeople = false;
+		printedRestaurants = false;
 		
 	}
 	
@@ -133,11 +141,45 @@ public class GlobalReceiver extends CyclicBehaviour {
 						e.printStackTrace();
 					}
 					
-					if(peopleSetup.size() == ((Global)myAgent).nPeople)
-						System.out.println(peopleSetup);
+					if(peopleSetup.size() == ((Global)myAgent).nPeople & !printedPeople){
+						printedPeople = true;
+						String fname = String.valueOf("people.json");
+						FileWriter fstream = null;
+						try {
+							fstream = new FileWriter(fname);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						BufferedWriter out = new BufferedWriter(fstream);
+						try {
+							out.write(peopleSetup.toJSONString());
+							out.flush();
+							out.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+						//System.out.println(peopleSetup);
 					
-					if(restaurantsSetup.size() == ((Global)myAgent).nRestaurants)
-						System.out.println(restaurantsSetup);
+					if(restaurantsSetup.size() == ((Global)myAgent).nRestaurants & !printedRestaurants){
+						printedRestaurants = true;
+						String fname = String.valueOf("restaurants.json");
+						FileWriter fstream = null;
+						try {
+							fstream = new FileWriter(fname);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						BufferedWriter out = new BufferedWriter(fstream);
+						try {
+							out.write(restaurantsSetup.toJSONString());
+							out.flush();
+							out.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+						//System.out.println(restaurantsSetup);
 					
 					break;
 				}
