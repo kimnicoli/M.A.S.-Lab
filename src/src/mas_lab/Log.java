@@ -70,7 +70,7 @@ public class Log extends OneShotBehaviour {
 			int turn = ((Global) myAgent).getTurn();
 			stringaTarget = stringaTarget.concat(this.sender.getLocalName() + ",");
 			stringaTarget = stringaTarget.concat(String.valueOf(turn)+ ",");
-			stringaTarget = stringaTarget.concat(target + ",");
+			stringaTarget = stringaTarget.concat(target);
 			stringaTarget = stringaTarget.concat("\n");
 		}
 
@@ -201,12 +201,20 @@ public class Log extends OneShotBehaviour {
 			for (int i = 0; i < listRe.length; i++) {
 
 				info = info.concat(listRe[i].getName().getLocalName());
-				info = info.concat(",");
+				
 				ServiceDescription sd = (ServiceDescription) listRe[i].getAllServices().next();
-				Property props = (Property) sd.getAllProperties().next();
-
-				info = info.concat(props.getValue() + "\n");
-
+				
+                                
+//                              Property props = (Property) sd.getAllProperties().next();                        
+//				info = info.concat(props.getValue() + "\n");
+                                
+                                Iterator it =  sd.getAllProperties();
+                                while (it.hasNext()) {
+                                    Property object = (Property)it.next();
+                                    info = info.concat("," + object.getValue());
+                                
+                                }
+                                info = info.concat("\n");
 			}
 
 			try {
@@ -223,7 +231,7 @@ public class Log extends OneShotBehaviour {
 				e.printStackTrace();
 			}
 
-			System.out.println(stringaTrust);
+			//System.out.println(stringaTrust);
 			System.exit(0);
 		}
 	}
