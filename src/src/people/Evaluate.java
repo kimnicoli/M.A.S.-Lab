@@ -63,71 +63,76 @@ public class Evaluate extends OneShotBehaviour {
 
 	@Override
 	public void action() {
-		double think = ((Person) myAgent).restMap.get(place);
-		double dThink = ((Person) myAgent).boldness * (quality - think);
-
-		if (Math.random() < Main.RandomFuzzyEvaluation) {
-			dThink = Math.random() * Main.EvaluateRange;
-			System.err.println("!!Fuzzy opinion!!");
-		} else
-			System.err.println("!!Standard opinion!!");
-
-		think += dThink + (0.5 - Math.random()) * Main.RandomEvaluation;
-		if (think < 0)
-			think = 0;
-		else if (think > Main.EvaluateRange)
-			think = Main.EvaluateRange;
-
-		((Person) myAgent).restMap.put(place, think);
-
-		// System.out.println("Now I, " + myAgent.getLocalName()
-		// + ", think of " + place.getLocalName()
-		// + " this: " +(think));
-
-		// Mappa locale di tutte le persone che mi hanno parlato di place (bene
-		// o male)
-		Hashtable<AID, Double> map = ((Person) myAgent).opinions.get(place);
-		for (AID person : map.keySet()) {
-			double myTrust = ((Person) myAgent).worldTrust.get(person);
-			// System.err.println("I, " + myAgent.getLocalName() + ", thought of
-			// " + person.getLocalName()
-			// + " this: " + myTrust);
-			double difference = Math.abs(think - map.get(person)) / Main.EvaluateRange;
-			double newTrust = 1 - difference;
-			myTrust = 0.5 * (myTrust + newTrust);
-			((Person) myAgent).worldTrust.put(person, myTrust);
-			// System.err.println("Now I, " + myAgent.getLocalName() + ", think
-			// of " + person.getLocalName()
-			// + " this: " + myTrust);
+		if(place != null){
+			double think = ((Person) myAgent).restMap.get(place);
+			double dThink = ((Person) myAgent).boldness * (quality - think);
+	
+			if (Math.random() < Main.ProbFuzzyEvaluation) {
+				dThink = Math.random() * Main.EvaluateRange;
+				System.err.println("!!Fuzzy opinion!!");
+			} else
+				System.err.println("!!Standard opinion!!");
+	
+			think += dThink + (0.5 - Math.random()) * Main.ProbEvaluation;
+			if (think < 0)
+				think = 0;
+			else if (think > Main.EvaluateRange)
+				think = Main.EvaluateRange;
+	
+			((Person) myAgent).restMap.put(place, think);
+	
+			// System.out.println("Now I, " + myAgent.getLocalName()
+			// + ", think of " + place.getLocalName()
+			// + " this: " +(think));
+	
+			// Mappa locale di tutte le persone che mi hanno parlato di place (bene
+			// o male)
+			Hashtable<AID, Double> map = ((Person) myAgent).opinions.get(place);
+			for (AID person : map.keySet()) {
+				double myTrust = ((Person) myAgent).worldTrust.get(person);
+				// System.err.println("I, " + myAgent.getLocalName() + ", thought of
+				// " + person.getLocalName()
+				// + " this: " + myTrust);
+				double difference = Math.abs(think - map.get(person)) / Main.EvaluateRange;
+				double newTrust = 1 - difference;
+				myTrust = 0.5 * (myTrust + newTrust);
+				((Person) myAgent).worldTrust.put(person, myTrust);
+				// System.err.println("Now I, " + myAgent.getLocalName() + ", think
+				// of " + person.getLocalName()
+				// + " this: " + myTrust);
+			}
+	
+			ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
+			msg2.setOntology("Reviews");
+			map = new Hashtable<AID, Double>();
+			map.put(place, ((Person) myAgent).restMap.get(place));
+			try {
+				msg2.setContentObject(map);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	
+			for (AID address : ((Person) myAgent).friends) {
+				msg2.addReceiver(address);
+			}
+			myAgent.send(msg2);
 		}
-
+		
 		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 		msg.addReceiver(global);
 		
 		Object[] objsend = new Object[3];
 		objsend[0] = ((Person) myAgent).worldTrust;
 		objsend[1] = ((Person) myAgent).restMap;
-		objsend[2] = place.getName();
+		if(place != null)
+			objsend[2] = place.getName();
+		else
+			objsend[2] = "Nowhere -1";
 		try {
 			msg.setContentObject(objsend);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		myAgent.send(msg);
-
-		ACLMessage msg2 = new ACLMessage(ACLMessage.INFORM);
-		msg2.setOntology("Reviews");
-		map = new Hashtable<AID, Double>();
-		map.put(place, ((Person) myAgent).restMap.get(place));
-		try {
-			msg2.setContentObject(map);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		for (AID address : ((Person) myAgent).friends) {
-			msg2.addReceiver(address);
-		}
-		myAgent.send(msg2);
 	}
 }

@@ -37,7 +37,7 @@ public class Person extends Agent {
 	protected void setup() {
 		
 		restMap = new TreeMap();
-		maxValue = Main.EvaluateRange;//Math.random() * Main.EvaluateRange;//
+		maxValue = Main.MinimumEvaluation + Math.random() * (Main.EvaluateRange - Main.MinimumEvaluation);//Main.EvaluateRange;//
 		boldness = Main.MinBoldness + Math.random() * (Main.MaxBoldness - Main.MinBoldness);
 		worldTrust = new Hashtable<AID, Double>();
 		friends = new Vector<AID>();

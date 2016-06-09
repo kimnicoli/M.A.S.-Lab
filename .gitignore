@@ -2,3 +2,5 @@
 .classpath
 agg-infoLOG.txt
 agg-LOG.txt
+agg-infoLOG.csv
+agg-LOGTARGET.csv
