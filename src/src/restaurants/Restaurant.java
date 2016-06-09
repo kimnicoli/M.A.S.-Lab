@@ -33,6 +33,7 @@ public class Restaurant extends Agent {
 		sd.setType("Restaurant");
 		sd.setName(getLocalName());
 		sd.addProperties(new Property("quality", quality));
+                sd.addProperties(new Property("capacity", capacity));
 		dfd.addServices(sd);
 		try {
 			DFService.register(this, dfd);
