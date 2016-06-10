@@ -1,5 +1,7 @@
 package src.restaurants;
 
+import java.io.IOException;
+
 import org.json.simple.JSONObject;
 
 import jade.core.AID;
@@ -52,7 +54,11 @@ public class Restaurant extends Agent {
 		
 		ACLMessage JSONmsg = new ACLMessage(ACLMessage.CONFIRM);
 		JSONmsg.addReceiver(global);
-		JSONmsg.setContent(Encode().toJSONString());
+		try {
+			JSONmsg.setContentObject(Encode());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		send(JSONmsg);
 		
 		addBehaviour(new RestaurantReceiver());

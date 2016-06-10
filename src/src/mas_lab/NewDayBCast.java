@@ -1,5 +1,7 @@
 package src.mas_lab;
 
+import java.io.IOException;
+
 import jade.core.Agent;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.AMSService;
@@ -11,14 +13,18 @@ import jade.lang.acl.ACLMessage;
 
 public class NewDayBCast extends OneShotBehaviour {
 
-	public NewDayBCast() {
-		// TODO Auto-generated constructor stub
-	}
-
+	DFAgentDescription[] results;
+	
 	public NewDayBCast(Agent a) {
 		super(a);
 		myAgent = a;
-		// TODO Auto-generated constructor stub
+		this.results = null;
+	}
+	
+	public NewDayBCast(Agent a, DFAgentDescription[] results) {
+		super(a);
+		myAgent = a;
+		this.results = results;
 	}
 
 	@Override
@@ -33,8 +39,20 @@ public class NewDayBCast extends OneShotBehaviour {
 			
 			System.out.println(amsd.length);
 			
-			((Global)myAgent).incrementTurn();
-			msg.setContent(Integer.toString(((Global)myAgent).getTurn()));
+			if(results != null)
+				try {
+					msg.setOntology("Init Phase");
+					msg.setContentObject(results);
+					System.out.println("-------------------Init Phase-------------------");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			else{
+				((Global)myAgent).incrementTurn();
+				msg.setOntology("New Turn");
+				msg.setContent(Integer.toString(((Global)myAgent).getTurn()));
+				System.out.println("-------------------New Turn-------------------");
+			}
 			myAgent.send(msg);
 		} catch(FIPAException e) {
 			e.printStackTrace();

@@ -1,5 +1,6 @@
 package src.people;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.TreeMap;
@@ -43,10 +44,10 @@ public class PersonReceiver extends CyclicBehaviour {
 		// TODO Auto-generated constructor stub
 	}*/
 	
-	void setupFriends() {
+	void setupFriends(DFAgentDescription[] presults) {
 		//System.out.println(myAgent.getLocalName() + " is chosing friends");
 		
-		DFAgentDescription pdfd = new DFAgentDescription();
+		/*DFAgentDescription pdfd = new DFAgentDescription();
 		ServiceDescription psd = new ServiceDescription();
 		psd.setType("Person");
 		pdfd.addServices(psd);
@@ -57,7 +58,7 @@ public class PersonReceiver extends CyclicBehaviour {
 			presults = DFService.search(myAgent, pdfd);	
 		} catch (FIPAException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		Vector<AID> results = new Vector<AID>();
 		
@@ -149,7 +150,25 @@ public class PersonReceiver extends CyclicBehaviour {
 					break;
 				}
 				case (ACLMessage.CONFIRM):{
-					if(Integer.decode(msg.getContent()) == 1 & !((Person)myAgent).fromFile){
+					if(msg.getOntology().equals("Init Phase")){
+						if(!((Person)myAgent).fromFile)
+							try {
+								setupFriends((DFAgentDescription[])msg.getContentObject());
+							} catch (UnreadableException e1) {
+								e1.printStackTrace();
+							}
+						ACLMessage JSONmsg = new ACLMessage(ACLMessage.CONFIRM);
+						JSONmsg.addReceiver(global);
+						try {
+							JSONmsg.setContentObject(((Person)myAgent).Encode());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						myAgent.send(JSONmsg);
+					}
+					else if(msg.getOntology().equals("New Turn"))
+						myAgent.addBehaviour(new Search(this));
+					/*if(Integer.decode(msg.getContent()) == 1 & !((Person)myAgent).fromFile){
 						setupFriends();
 					}
 					//System.out.println(myAgent.getLocalName() + "\n" +((Person)myAgent).Encode());
@@ -157,7 +176,7 @@ public class PersonReceiver extends CyclicBehaviour {
 					JSONmsg.addReceiver(global);
 					JSONmsg.setContent(((Person)myAgent).Encode().toJSONString());
 					myAgent.send(JSONmsg);
-					myAgent.addBehaviour(new Search(this));
+					myAgent.addBehaviour(new Search(this));*/
 					break;
 				}
 				default:

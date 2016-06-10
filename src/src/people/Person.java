@@ -81,8 +81,6 @@ public class Person extends Agent {
 		
 		PersonReceiver receiver = new PersonReceiver(this);
 		addBehaviour(receiver);
-		//addBehaviour(new Search(receiver));
-		
 	}
 	
 	public JSONObject Encode() {
@@ -145,7 +143,6 @@ public class Person extends Agent {
 			this.restMap.clear();
 			JSONObject rMObj = (JSONObject)obj.get("restMap");
 			for(Object key : rMObj.keySet()){
-				//System.out.println(new AID((String)key + address, true));
 				this.restMap.put(new AID((String)key + address, true), (Double)rMObj.get(key));
 			}
 		}

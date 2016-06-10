@@ -36,7 +36,6 @@ public class Launcher {
 		args[2] = null;
 		
 		if(peopleSetup != null){
-			//System.out.println("loading file");
 			JSONParser parser = new JSONParser();
 			BufferedReader br = null;
 			JSONObject peopleJSON = null;
@@ -55,7 +54,6 @@ public class Launcher {
 			args[3] = null;
 		
 		if(restaurantSetup != null){
-			//System.out.println("loading file");
 			JSONParser parser = new JSONParser();
 			BufferedReader br = null;
 			JSONObject restJSON = null;

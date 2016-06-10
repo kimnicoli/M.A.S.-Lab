@@ -17,6 +17,7 @@ public class Global extends Agent {
 	int nPeople;
 	int nRestaurants;
 	
+	//Oggetti JSON per il salvataggio del settaggio della simulazione corrente
 	JSONObject myPeople;
 	JSONObject myRestaurants;
 	
@@ -29,13 +30,16 @@ public class Global extends Agent {
 		 * args[2] : JSONObject myRestaurants
 		 * args[3] : JSONObject myPeople
 		 */
+		//inizializzo le variabili
 		nRestaurants = (Integer)args[0];
 		nPeople = (Integer)args[1];
 		myRestaurants = (JSONObject)args[2];
 		myPeople = (JSONObject)args[3];
 		System.out.println(myPeople);
 		System.out.println(myRestaurants);
+		turn = 0;
 		
+		//Registro il Global al DF
 		DFAgentDescription mydfd = new DFAgentDescription();
 		ServiceDescription mysd = new ServiceDescription();
 		mysd.setType("Global");
@@ -48,15 +52,14 @@ public class Global extends Agent {
 		}
 		
 		InitRestaurants();
-		
+
 		DFAgentDescription[] results = new DFAgentDescription[0];
 		DFAgentDescription dfd = new DFAgentDescription();
 		ServiceDescription sd = new ServiceDescription();
 		sd.setType("Restaurant");
 		dfd.addServices(sd);
 		
-		//Launcher.instance().InitRestaurants();
-		
+		//Aspetto finché tutti i ristoranti sono attivi		
 		while(results.length < nRestaurants) {		
 			try {
 				results = DFService.search(this, dfd);
@@ -66,24 +69,16 @@ public class Global extends Agent {
 			}
 		}
 		
-		//System.out.println("outta here, with " + nRestaurants);
-		
-		try{
-			InitPeople();
-		} catch(NullPointerException e) {
-			e.printStackTrace();
-		}
-		
-		turn = 0;
+
+		InitPeople();
 		
 		DFAgentDescription pdfd = new DFAgentDescription();
 		ServiceDescription psd = new ServiceDescription();
 		psd.setType("Person");
 		pdfd.addServices(psd);
 		
-		
+		//Aspetto finché tutte le persone non sono attive
 		DFAgentDescription[] presults = new DFAgentDescription[0];
-		
 		while(presults.length < nPeople) {		
 			try {
 				presults = DFService.search(this, pdfd);
@@ -93,9 +88,9 @@ public class Global extends Agent {
 			}
 		}
 		
-		//System.out.println("outta here, with " + results.length);
-		
-		
+		//Turno di inizializzazione
+		addBehaviour(new NewDayBCast(this, presults));
+		//Inizio la simulazione
 		addBehaviour(new GlobalReceiver(this, presults, results));
 	}
 	
@@ -108,7 +103,6 @@ public class Global extends Agent {
 				String key = "Restaurant " + i;
 				if(myRestaurants != null){
 					args[0] = myRestaurants.get(key);
-					//System.out.println("filling json with " + args[0]);
 				} else
 					args[0] = null;
 				ac = cc.createNewAgent(key, "src.restaurants.Restaurant", args);
@@ -128,7 +122,6 @@ public class Global extends Agent {
 				String key = "Person " + i;
 				if(myPeople != null){
 					args[0] = myPeople.get(key);
-					//System.out.println("filling json with " + args[0]);
 				} else
 					args[0] = null;
 				ac = cc.createNewAgent(key, "src.people.Person", args);
