@@ -17,11 +17,6 @@ public class Eat extends  OneShotBehaviour {
 		this.place = place;
 	}
 
-	public Eat(Agent a) {
-		super(a);
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void action() {
 		if(place == null) {
@@ -34,21 +29,10 @@ public class Eat extends  OneShotBehaviour {
 			msg.setContent("Reserve me a table, please!");
 			myAgent.send(msg);
 			
-			//Logger.log(me_at_place)
-			
 			System.out.println("I, " + myAgent.getLocalName() 
 			+ ", will eat at " + place.getLocalName() + ", of which I think " 
 			+ ((Person)myAgent).restMap.get(place));
-			
-			//myAgent.addBehaviour(new Evaluate(place));
 		}
 
 	}
-
-	/*@Override
-	public boolean done() {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
-
 }

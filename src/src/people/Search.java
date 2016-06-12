@@ -23,11 +23,6 @@ public class Search extends OneShotBehaviour {
 	public Search(PersonReceiver receiver) {
 		this.receiver = receiver;
 	}
-	
-	public Search(Agent a) {
-		super(a);
-		// TODO Auto-generated constructor stub
-	}
 
 	@Override
 	public void action() {
@@ -44,43 +39,28 @@ public class Search extends OneShotBehaviour {
 			sortedset.addAll(((Person)myAgent).restMap.entrySet());
 			
 			Vector<AID> receivers = new Vector<AID>();
-			//Set set = ((Person)myAgent).restMap.entrySet();
 			Iterator i = sortedset.iterator();
 			Map.Entry current;
 			
 			ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
 			ACLMessage received;
 			
-			//int receivers = 0;
-			
 			while(i.hasNext()){
 				current = (Map.Entry)i.next();
 				if((Double)(current.getValue()) > ((Person)myAgent).maxValue)
 					break;
-				//receivers++;
 				request.clearAllReceiver();
 				request.addReceiver(((AID)current.getKey()));
 				request.setContent("isFree?");
 				myAgent.send(request);
 				
 				receivers.addElement(((AID)current.getKey()));
-				
-				//System.out.println("Request sent");
 			}
 			
 			receiver.setReceivers(receivers);
 			if(receivers.size() == 0)
 				myAgent.addBehaviour(new Evaluate(myAgent, null));
 			
-			//System.out.println("Sent " + receivers.size() + " messages");
-			//myAgent.addBehaviour(new Receive(receivers));
 		}
 	}
-
-	/*@Override
-	public boolean done() {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
-
 }

@@ -22,11 +22,6 @@ public class Chose extends OneShotBehaviour {
 		this.receiver = receiver;
 	}
 
-	public Chose(Agent a) {
-		super(a);
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void action() {
 		if(!free.isEmpty()){
@@ -98,7 +93,6 @@ public class Chose extends OneShotBehaviour {
 			}
 			
 		} else {
-			//TODO
 			myAgent.addBehaviour(new Eat());
 		}
 

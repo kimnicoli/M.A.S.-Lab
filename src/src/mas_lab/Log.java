@@ -65,11 +65,11 @@ public class Log extends OneShotBehaviour {
 		// -----------------------LOG TARGET----------------------------
 
 		if (this.target != null) {
-			if(stringaTarget == null)
+			if (stringaTarget == null)
 				stringaTarget = new String();
 			int turn = ((Global) myAgent).getTurn();
 			stringaTarget = stringaTarget.concat(this.sender.getLocalName() + ",");
-			stringaTarget = stringaTarget.concat(String.valueOf(turn)+ ",");
+			stringaTarget = stringaTarget.concat(String.valueOf(turn) + ",");
 			stringaTarget = stringaTarget.concat(target);
 			stringaTarget = stringaTarget.concat("\n");
 		}
@@ -93,10 +93,10 @@ public class Log extends OneShotBehaviour {
 		if (this.trustMap != null) {
 			int nPer = trustMap.keySet().size();
 
-			if (((Global) myAgent).getTurn() != TURNO) // se il turno e cambiato
+			if (((Global) myAgent).getTurn() != TURNO) // se il turno è cambiato
 			{
 
-				if (TURNO == -1) // se e il primo turno
+				if (TURNO == -1) // se è il primo turno
 				{
 					matriceT = new double[nPer][nPer];
 					// metti la matrice = 0
@@ -157,10 +157,8 @@ public class Log extends OneShotBehaviour {
 				e.printStackTrace();
 			}
 
-			// // -----------------------WRITE
-			// TARGET----------------------------
-			// // -----------------------WRITE
-			// TARGET----------------------------
+			// -----------------------WRITE TARGET----------------------------
+			// -----------------------WRITE TARGET----------------------------
 			String aggFileNameTarget = "agg-" + String.valueOf("LOGTARGET.csv");
 			try {
 				fstream = new FileWriter(aggFileNameTarget);
@@ -201,20 +199,19 @@ public class Log extends OneShotBehaviour {
 			for (int i = 0; i < listRe.length; i++) {
 
 				info = info.concat(listRe[i].getName().getLocalName());
-				
+
 				ServiceDescription sd = (ServiceDescription) listRe[i].getAllServices().next();
-				
-                                
-//                              Property props = (Property) sd.getAllProperties().next();                        
-//				info = info.concat(props.getValue() + "\n");
-                                
-                                Iterator it =  sd.getAllProperties();
-                                while (it.hasNext()) {
-                                    Property object = (Property)it.next();
-                                    info = info.concat("," + object.getValue());
-                                
-                                }
-                                info = info.concat("\n");
+
+				// Property props = (Property) sd.getAllProperties().next();
+				// info = info.concat(props.getValue() + "\n");
+
+				Iterator it = sd.getAllProperties();
+				while (it.hasNext()) {
+					Property object = (Property) it.next();
+					info = info.concat("," + object.getValue());
+
+				}
+				info = info.concat("\n");
 			}
 
 			try {
@@ -231,7 +228,8 @@ public class Log extends OneShotBehaviour {
 				e.printStackTrace();
 			}
 
-			//System.out.println(stringaTrust);
+			// System.out.println(stringaTrust);
+			System.out.println("-----------------------Ending Simulation------------------------");
 			System.exit(0);
 		}
 	}

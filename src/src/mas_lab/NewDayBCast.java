@@ -33,8 +33,7 @@ public class NewDayBCast extends OneShotBehaviour {
 		try{
 			DFAgentDescription[] amsd = DFService.search(myAgent, new DFAgentDescription());
 			for (DFAgentDescription amsAgentDescription : amsd) {
-				//if(!(myAgent.getAID().equals(amsAgentDescription.getName())))
-					msg.addReceiver(amsAgentDescription.getName());
+				msg.addReceiver(amsAgentDescription.getName());
 			}
 			
 			System.out.println(amsd.length);

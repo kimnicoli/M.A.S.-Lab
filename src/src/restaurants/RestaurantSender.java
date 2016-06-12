@@ -23,11 +23,6 @@ public class RestaurantSender extends OneShotBehaviour {
 		this.ranking = ranking;
 	}
 
-	public RestaurantSender(Agent a) {
-		super(a);
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void action() {
 		ACLMessage msg = new ACLMessage(performative);
@@ -39,15 +34,7 @@ public class RestaurantSender extends OneShotBehaviour {
 		}
 		
 		myAgent.send(msg);
-		//System.out.println("Sent restaurant message");
 		
 		myAgent.addBehaviour(new RestaurantReceiver());
 	}
-
-	/*@Override
-	public boolean done() {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
-
 }

@@ -63,26 +63,15 @@ public class GlobalReceiver extends CyclicBehaviour {
 
 	}
 
-	public GlobalReceiver(Agent a) {
-		super(a);
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void action() {
 		ACLMessage msg = myAgent.receive();
 		if (msg == null) {
-			// System.out.println("Receive loop");
 			block();
 		} else {
 			switch (msg.getPerformative()) {
 			case (ACLMessage.INFORM): {
-				// System.out.println("Received inform from " +
-				// msg.getSender().getLocalName());
-				// System.out.println(currentTarget);
-
 				if (currentPeople.contains(msg.getSender())) {
-					// System.out.println("Received inform");
 					currentPeople.remove(msg.getSender());
 					PeopleReceived++;
 
@@ -91,7 +80,6 @@ public class GlobalReceiver extends CyclicBehaviour {
 							try {
 								myAgent.addBehaviour(new Log(allRArray, msg.getSender(), 
 										false, (Object[]) msg.getContentObject()));
-								// block();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -100,18 +88,14 @@ public class GlobalReceiver extends CyclicBehaviour {
 							try {
 								myAgent.addBehaviour(new Log(allRArray, msg.getSender(), 
 										true, (Object[]) msg.getContentObject()));
-								// System.out.println("printing log");
-								// block();
 							} catch (UnreadableException e) {
 								e.printStackTrace();
 							}
-							// System.exit(0);
 						}
 					} else {
 						try {
 							myAgent.addBehaviour(new Log(allRArray, msg.getSender(), 
 									false, (Object[]) msg.getContentObject()));
-							// block();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -124,15 +108,10 @@ public class GlobalReceiver extends CyclicBehaviour {
 			case (ACLMessage.CONFIRM): {
 				if (!msg.getSender().equals(myAgent.getAID())) {
 					String sender = msg.getSender().getLocalName();
-					// JSONParser parser = new JSONParser();
-
-					// JSONObject obj =
-					// (JSONObject)parser.parse(msg.getContent());
 					Object obj = null;
 					try {
 						obj = msg.getContentObject();
 					} catch (UnreadableException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					if (sender.split(" ")[0].equals("Person")) {
@@ -162,8 +141,7 @@ public class GlobalReceiver extends CyclicBehaviour {
 						}
 						reset();
 					}
-					// System.out.println(peopleSetup);
-
+					
 					if (restaurantsSetup.size() == ((Global) myAgent).nRestaurants & !printedRestaurants) {
 						printedRestaurants = true;
 						String fname = String.valueOf("restaurants.json");
@@ -182,7 +160,6 @@ public class GlobalReceiver extends CyclicBehaviour {
 							e.printStackTrace();
 						}
 					}
-					// System.out.println(restaurantsSetup);
 				}
 				break;
 			}
@@ -196,12 +173,10 @@ public class GlobalReceiver extends CyclicBehaviour {
 	public void reset() {
 		currentRestaurant = (Vector<DFAgentDescription>) allRestaurants.clone();
 		currentPeople = (Vector<AID>) allPeople.clone();
-		System.out.println(currentPeople.size());
+		//System.out.println(currentPeople.size());
 		PeopleReceived = 0;
 		RestaurantReceived = 0;
 		((Global) myAgent).addBehaviour(new NewDayBCast(myAgent));
-
-		// System.out.println(this.myAgent.getLocalName());
 	}
 
 }
