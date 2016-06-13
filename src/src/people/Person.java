@@ -37,25 +37,16 @@ public class Person extends Agent {
 	protected void setup() {
 		
 		restMap = new TreeMap();
-		maxValue = Main.MinimumEvaluation + Math.random() * (Main.EvaluateRange - Main.MinimumEvaluation);//Main.EvaluateRange;//
+		maxValue = Main.EvaluateRange;//Main.MinimumEvaluation + Math.random() * (Main.EvaluateRange - Main.MinimumEvaluation);//
 		boldness = Main.MinBoldness + Math.random() * (Main.MaxBoldness - Main.MinBoldness);
 		worldTrust = new Hashtable<AID, Double>();
 		friends = new Vector<AID>();
 		opinions = new Hashtable<AID, Hashtable<AID,Double>>();
 		
-		DFAgentDescription dfd = new DFAgentDescription();
-		ServiceDescription sd = new ServiceDescription();
-		sd.setType("Restaurant");
-		dfd.addServices(sd);
-		DFAgentDescription[] results = new DFAgentDescription[0];
-		try {
-			results = DFService.search(this, dfd);
-			System.out.println(results.length + " results from " + getLocalName());
-		} catch (FIPAException e) {
-			e.printStackTrace();
-		}
-		System.out.println("Hi from " + getLocalName() + "! I prefer " + maxValue);
+		Object[] args = getArguments();
+		DFAgentDescription[] results = (DFAgentDescription[]) args[1];
 		
+		System.out.println(getLocalName()+ ": init on " + results.length);
 		for (DFAgentDescription result : results){
 			restMap.put(result.getName(), Math.random() * Main.EvaluateRange);
 			opinions.put(result.getName(), new Hashtable<AID, Double>());
@@ -73,14 +64,14 @@ public class Person extends Agent {
 		}
 		
 		fromFile = false;
-		Object[] args = getArguments();
 		if(args[0] != null){
 			Decode((JSONObject)args[0]);
 			fromFile = true;
 		}
 		
-		PersonReceiver receiver = new PersonReceiver(this);
-		addBehaviour(receiver);
+		System.out.println("Hi from " + getLocalName() + "! I prefer " + maxValue);
+		
+		addBehaviour(new PersonReceiver(this));
 	}
 	
 	public JSONObject Encode() {

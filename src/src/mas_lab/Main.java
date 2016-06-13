@@ -13,7 +13,7 @@ public class Main {
 	/**
 	 * Capacità massima per gli agenti Restaurant
 	 */
-	public static int MaxCapacity = 20;
+	public static int MaxCapacity = 10;
 	/**
 	 * Valore minimo per la "cocciutaggine" degli agenti Person
 	 */
@@ -25,7 +25,7 @@ public class Main {
 	/**
 	 * Numero di turni a cui terminare la simulazione
 	 */
-	public static int MaxTurns = 5;
+	public static int MaxTurns = 1;
 	
 	/**
 	 * Larghezza della fluttuazione random nella valutazione razionale
@@ -48,15 +48,11 @@ public class Main {
 	/**
 	 * Numero massimo di amici per cerchia di amicizia
 	 */
-	public static int MaxFriends = 2;
-
-	public Main() {
-		// TODO Auto-generated constructor stub
-	}
+	public static int MaxFriends = 0;
 
 	public static void main(String[] args) {
 		Launcher launcher = new Launcher();
-		launcher.InitJade(10, 60, null, null);
+		launcher.InitJade(1, 10, null, null);
 	}
 
 }

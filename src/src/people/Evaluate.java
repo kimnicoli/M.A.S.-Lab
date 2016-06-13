@@ -18,8 +18,7 @@ public class Evaluate extends OneShotBehaviour {
 
 	AID place;
 	double quality;
-	PersonReceiver receiver;
-
+	
 	static AID global;
 
 	public Evaluate(Agent a, AID place) {
@@ -31,11 +30,10 @@ public class Evaluate extends OneShotBehaviour {
 		}
 	}
 
-	public Evaluate(Agent a, double quality, AID place, PersonReceiver receiver) {
+	public Evaluate(Agent a, double quality, AID place) {
 		myAgent = a;
 		this.quality = quality;
 		this.place = place;
-		this.receiver = receiver;
 
 		if (global == null) {
 			global = getGlobal();

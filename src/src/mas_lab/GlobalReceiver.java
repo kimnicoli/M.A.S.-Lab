@@ -28,9 +28,9 @@ import src.people.Search;
 
 public class GlobalReceiver extends CyclicBehaviour {
 
-	Vector<DFAgentDescription> allRestaurants;
+	Vector<AID> allRestaurants;
 	Vector<AID> allPeople;
-	Vector<DFAgentDescription> currentRestaurant;
+	Vector<AID> currentRestaurant;
 	Vector<AID> currentPeople;
 	DFAgentDescription[] allRArray;
 	int PeopleReceived;
@@ -44,7 +44,7 @@ public class GlobalReceiver extends CyclicBehaviour {
 	public GlobalReceiver(Agent a, DFAgentDescription[] allPeople, DFAgentDescription[] allRestaurants) {
 		super(a);
 		this.myAgent = a;
-		this.allRestaurants = new Vector<DFAgentDescription>();
+		this.allRestaurants = new Vector<AID>();
 		this.allPeople = new Vector<AID>();
 
 		allRArray = allRestaurants;
@@ -54,7 +54,7 @@ public class GlobalReceiver extends CyclicBehaviour {
 				this.allPeople.add(dfd.getName());
 		for (DFAgentDescription dfd : allRestaurants)
 			if (dfd != null)
-				this.allRestaurants.add(dfd);
+				this.allRestaurants.add(dfd.getName());
 
 		peopleSetup = new JSONObject();
 		restaurantsSetup = new JSONObject();
@@ -163,6 +163,19 @@ public class GlobalReceiver extends CyclicBehaviour {
 				}
 				break;
 			}
+			
+			case (ACLMessage.PROPAGATE):{
+				if (currentRestaurant.contains(msg.getSender())) {
+					currentRestaurant.remove(msg.getSender());
+					RestaurantReceived++;
+					System.out.println("Restaurant reset at: "
+										+ RestaurantReceived*100/allRestaurants.size() + "%");
+
+					if (RestaurantReceived == allRestaurants.size())
+						myAgent.addBehaviour(new NewDayBCast(myAgent));
+				}
+				break;
+			}
 
 			default:
 				block();
@@ -171,12 +184,12 @@ public class GlobalReceiver extends CyclicBehaviour {
 	}
 
 	public void reset() {
-		currentRestaurant = (Vector<DFAgentDescription>) allRestaurants.clone();
+		currentRestaurant = (Vector<AID>) allRestaurants.clone();
 		currentPeople = (Vector<AID>) allPeople.clone();
-		//System.out.println(currentPeople.size());
+		System.out.println("Restaurants: " + allRestaurants.size());
+		System.out.println("Restaurants: " + currentRestaurant.size());
 		PeopleReceived = 0;
 		RestaurantReceived = 0;
-		((Global) myAgent).addBehaviour(new NewDayBCast(myAgent));
+		myAgent.addBehaviour(new NewDayBCast(myAgent, true));
 	}
-
 }
