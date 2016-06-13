@@ -18,8 +18,7 @@ public class Evaluate extends OneShotBehaviour {
 
 	AID place;
 	double quality;
-	PersonReceiver receiver;
-
+	
 	static AID global;
 
 	public Evaluate(Agent a, AID place) {
@@ -31,11 +30,10 @@ public class Evaluate extends OneShotBehaviour {
 		}
 	}
 
-	public Evaluate(Agent a, double quality, AID place, PersonReceiver receiver) {
+	public Evaluate(Agent a, double quality, AID place) {
 		myAgent = a;
 		this.quality = quality;
 		this.place = place;
-		this.receiver = receiver;
 
 		if (global == null) {
 			global = getGlobal();
@@ -62,13 +60,7 @@ public class Evaluate extends OneShotBehaviour {
 			double think = ((Person) myAgent).restMap.get(place);
 			double dThink = ((Person) myAgent).boldness * (quality - think);
 	
-			if (Math.random() < Main.ProbFuzzyEvaluation) {
-				dThink = Math.random() * Main.EvaluateRange;
-				System.err.println("!!Fuzzy opinion!!");
-			} else
-				System.err.println("!!Standard opinion!!");
-	
-			think += dThink + (0.5 - Math.random()) * Main.ProbEvaluation;
+			think += dThink;
 			if (think < 0)
 				think = 0;
 			else if (think > Main.EvaluateRange)

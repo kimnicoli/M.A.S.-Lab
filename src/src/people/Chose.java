@@ -26,20 +26,28 @@ public class Chose extends OneShotBehaviour {
 	public void action() {
 		if(!free.isEmpty()){
 			SortedSet<Map.Entry<AID, Double>> sortedset = new TreeSet<Map.Entry<AID, Double>>(
-		            new Comparator<Map.Entry<AID, Double>>() {
-		                @Override
-		                public int compare(Map.Entry<AID, Double> e1,
-		                        Map.Entry<AID, Double> e2) {
-		                    return -e1.getValue().compareTo(e2.getValue());
-		                }
-		            });
-			double random = Math.random();
-			if(random > Main.ProbChooseBFF + Main.ProbChoseRandom){
+					new Comparator<Map.Entry<AID, Double>>() {
+						@Override
+						public int compare(Map.Entry<AID, Double> e1, Map.Entry<AID, Double> e2) {
+							if (e1.getKey().equals(e2.getKey()))
+								return 0;
+							else {
+								int diff = -e1.getValue().compareTo(e2.getValue());
+								if (diff == 0.0)
+									return e1.getKey().compareTo(e2.getKey());
+								else
+									return diff;
+							}
+						}
+					});
+			//double random = Math.random();
+			//if(random > Main.ProbChooseBFF + Main.ProbChoseRandom){
 				sortedset.addAll(free.entrySet());
 				receiver.setCurrentTarget(sortedset.first().getKey());
 				myAgent.addBehaviour(new Eat(sortedset.first().getKey()));
-				System.err.println("!!Normal choice!!");
-			} else if(random < Main.ProbChooseBFF){
+				System.out.println(myAgent.getLocalName() + ": Eating Now");
+				//System.err.println("!!Normal choice!!");
+			/*} else if(random < Main.ProbChooseBFF){
 				sortedset.addAll(((Person)myAgent).worldTrust.entrySet());
 				AID bff = null;
 				while(!((Person)myAgent).friends.contains(bff)){
@@ -90,7 +98,7 @@ public class Chose extends OneShotBehaviour {
 				receiver.setCurrentTarget(chosenOne);
 				myAgent.addBehaviour(new Eat(chosenOne));
 				System.err.println("!!Random choice!!");
-			}
+			}*/
 			
 		} else {
 			myAgent.addBehaviour(new Eat());
