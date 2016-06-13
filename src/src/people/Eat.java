@@ -20,8 +20,8 @@ public class Eat extends  OneShotBehaviour {
 	@Override
 	public void action() {
 		if(place == null) {
-			System.out.println("Error, no place to go!");
-			myAgent.doDelete();
+			System.err.println("Error, no place to go!");
+			myAgent.addBehaviour(new Evaluate(myAgent, -1.0, null));
 			
 		} else {
 			ACLMessage msg = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);

@@ -89,7 +89,7 @@ public class PersonReceiver extends CyclicBehaviour {
 				}
 				case (ACLMessage.INFORM):{
 					if(msg.getSender().equals(currentTarget)){
-						myAgent.addBehaviour(new Evaluate(myAgent, Double.parseDouble(msg.getContent()),currentTarget, this));
+						myAgent.addBehaviour(new Evaluate(myAgent, Double.parseDouble(msg.getContent()),currentTarget));
 						Reset();
 						
 					}

@@ -38,7 +38,10 @@ public class RestaurantReceiver extends CyclicBehaviour {
 					break;
 				}
 				case ACLMessage.CONFIRM:{
-					((Restaurant)myAgent).fullness = 0;
+					if(msg.getOntology().equals("Restaurant Reset")){
+						((Restaurant)myAgent).fullness = 0;
+						myAgent.addBehaviour(new RestaurantSender(ACLMessage.PROPAGATE, msg.getSender()));
+					}
 					break;
 				}
 				default: {

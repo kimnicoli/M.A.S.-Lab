@@ -13,7 +13,7 @@ public class Main {
 	/**
 	 * Capacità massima per gli agenti Restaurant
 	 */
-	public static int MaxCapacity = 20;
+	public static int MaxCapacity = 10;
 	/**
 	 * Valore minimo per la "cocciutaggine" degli agenti Person
 	 */
@@ -56,7 +56,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Launcher launcher = new Launcher();
-		launcher.InitJade(10, 60, null, null);
+		launcher.InitJade(1, 10, null, null);
 	}
 
 }
