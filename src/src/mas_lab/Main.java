@@ -30,20 +30,20 @@ public class Main {
 	/**
 	 * Larghezza della fluttuazione random nella valutazione razionale
 	 */
-	public static double ProbEvaluation = 0.0;
+	public static double ProbEvaluation = 1.0;
 	/**
 	 * Probabilità di una valutazione irrazionale
 	 */
-	public static double ProbFuzzyEvaluation = 0.0;
+	public static double ProbFuzzyEvaluation = 0.1;
 	
 	/**
 	 * Probabilità di scegliere in base alla miglior opinione del miglior amico
 	 */
-	public static double ProbChooseBFF = 	0.0;
+	public static double ProbChooseBFF = 	0.1;
 	/**
 	 * Probabilità di scegliere il primo ristorante che risponde "libero"
 	 */
-	public static double ProbChoseRandom = 0.0;
+	public static double ProbChoseRandom = 0.1;
 	
 	/**
 	 * Numero massimo di amici per cerchia di amicizia

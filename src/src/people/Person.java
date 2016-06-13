@@ -48,7 +48,7 @@ public class Person extends Agent {
 		
 		System.out.println(getLocalName()+ ": init on " + results.length);
 		for (DFAgentDescription result : results){
-			restMap.put(result.getName(), 0.5*Main.EvaluateRange);//Math.random() * Main.EvaluateRange);
+			restMap.put(result.getName(), Math.random() * Main.EvaluateRange);
 			opinions.put(result.getName(), new Hashtable<AID, Double>());
 		}
 		

@@ -40,14 +40,14 @@ public class Chose extends OneShotBehaviour {
 							}
 						}
 					});
-			//double random = Math.random();
-			//if(random > Main.ProbChooseBFF + Main.ProbChoseRandom){
+			double random = Math.random();
+			if(random > Main.ProbChooseBFF + Main.ProbChoseRandom){
 				sortedset.addAll(free.entrySet());
 				receiver.setCurrentTarget(sortedset.first().getKey());
 				myAgent.addBehaviour(new Eat(sortedset.first().getKey()));
 				System.out.println(myAgent.getLocalName() + ": Eating Now");
-				//System.err.println("!!Normal choice!!");
-			/*} else if(random < Main.ProbChooseBFF){
+				System.err.println("!!Normal choice!!");
+			} else if(random < Main.ProbChooseBFF){
 				sortedset.addAll(((Person)myAgent).worldTrust.entrySet());
 				AID bff = null;
 				while(!((Person)myAgent).friends.contains(bff)){
@@ -98,7 +98,7 @@ public class Chose extends OneShotBehaviour {
 				receiver.setCurrentTarget(chosenOne);
 				myAgent.addBehaviour(new Eat(chosenOne));
 				System.err.println("!!Random choice!!");
-			}*/
+			}
 			
 		} else {
 			myAgent.addBehaviour(new Eat());
