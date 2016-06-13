@@ -165,8 +165,6 @@ public class GlobalReceiver extends CyclicBehaviour {
 			}
 			
 			case (ACLMessage.PROPAGATE):{
-				//System.out.println("Received PROPAGATE from: " + msg.getSender());
-				//System.out.println("Expecting from: " currentRestaurant.);
 				if (currentRestaurant.contains(msg.getSender())) {
 					currentRestaurant.remove(msg.getSender());
 					RestaurantReceived++;
@@ -192,11 +190,6 @@ public class GlobalReceiver extends CyclicBehaviour {
 		System.out.println("Restaurants: " + currentRestaurant.size());
 		PeopleReceived = 0;
 		RestaurantReceived = 0;
-		//if(((Global) myAgent).turn != 0)
-			myAgent.addBehaviour(new NewDayBCast(myAgent, true));
-		/*else{
-			myAgent.addBehaviour(new NewDayBCast(myAgent));
-			myAgent.addBehaviour(new NewDayBCast(myAgent, true));
-		}*/
+		myAgent.addBehaviour(new NewDayBCast(myAgent, true));
 	}
 }

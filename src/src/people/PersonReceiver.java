@@ -22,18 +22,25 @@ import src.mas_lab.Main;
 
 public class PersonReceiver extends CyclicBehaviour {
 
+		
 	AID currentTarget;
 	int maxReceivers;
 	int arrived;
 	TreeMap<AID, Double> free;
 	Vector<AID> receivers;
+	Vector<AID> fullRestaurants;
 	
 	static AID global;
+	
+	boolean choosing;
+	
 	
 	public PersonReceiver(Agent a) {
 		super(a);
 		free = new TreeMap<AID, Double>();
 		receivers = new Vector<AID>();
+		fullRestaurants = new Vector<AID>();
+		choosing = false;
 		if (global == null){
 			global = getGlobal();
 		}
@@ -73,8 +80,10 @@ public class PersonReceiver extends CyclicBehaviour {
 						arrived++;
 						receivers.remove(msg.getSender());
 					}
-					if(arrived == maxReceivers)
+					if(arrived == maxReceivers & !choosing){
 						myAgent.addBehaviour(new Chose(this, free));
+						choosing = true;
+					}
 					break;
 				}
 				case (ACLMessage.PROPOSE):{
@@ -83,15 +92,17 @@ public class PersonReceiver extends CyclicBehaviour {
 						receivers.remove(msg.getSender());
 						free.put(msg.getSender(), ((Person)myAgent).restMap.get(msg.getSender()));
 					}
-					if(arrived == maxReceivers)
+					if(arrived == maxReceivers & !choosing){
 						myAgent.addBehaviour(new Chose(this, free));
+						choosing = true;
+					}
 					break;
 				}
 				case (ACLMessage.INFORM):{
 					if(msg.getSender().equals(currentTarget)){
 						myAgent.addBehaviour(new Evaluate(myAgent, Double.parseDouble(msg.getContent()),currentTarget));
 						Reset();
-						
+						fullRestaurants.clear();
 					}
 					
 					if(msg.getOntology().equals("Reviews")){
@@ -107,8 +118,10 @@ public class PersonReceiver extends CyclicBehaviour {
 				}
 				case (ACLMessage.FAILURE):{
 					if(msg.getSender().equals(currentTarget)){
-						myAgent.addBehaviour(new Search(this));
+						System.err.println(myAgent.getLocalName() + ": Received Failure");
+						fullRestaurants.add(currentTarget);
 						Reset();
+						myAgent.addBehaviour(new Search(this, fullRestaurants));
 					}
 					break;
 				}
@@ -129,8 +142,9 @@ public class PersonReceiver extends CyclicBehaviour {
 						}
 						myAgent.send(JSONmsg);
 					}
-					else if(msg.getOntology().equals("New Turn"))
-						myAgent.addBehaviour(new Search(this));
+					else if(msg.getOntology().equals("New Turn")){
+						myAgent.addBehaviour(new Search(this, fullRestaurants));
+					}
 					break;
 				}
 				default:
@@ -140,6 +154,7 @@ public class PersonReceiver extends CyclicBehaviour {
 	}
 	
 	public void Reset() {
+		choosing = false;
 		currentTarget = null;
 		maxReceivers  = 0;
 		receivers.clear();

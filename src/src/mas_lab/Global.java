@@ -70,7 +70,7 @@ public class Global extends Agent {
 		}
 		
 
-		InitPeople();
+		InitPeople(results);
 		
 		DFAgentDescription pdfd = new DFAgentDescription();
 		ServiceDescription psd = new ServiceDescription();
@@ -113,17 +113,18 @@ public class Global extends Agent {
 		}
 	}
 	
-	public void InitPeople () {		
+	public void InitPeople (DFAgentDescription[] results) {		
 		AgentController ac;
 		ContainerController cc = this.getContainerController();
 		for(int i = 0; i < nPeople; i++) {
 			try {
-				Object[] args = new Object[1];
+				Object[] args = new Object[2];
 				String key = "Person " + i;
 				if(myPeople != null){
 					args[0] = myPeople.get(key);
 				} else
 					args[0] = null;
+				args[1] = results;
 				ac = cc.createNewAgent(key, "src.people.Person", args);
 				ac.start();
 			} catch(StaleProxyException e) {
