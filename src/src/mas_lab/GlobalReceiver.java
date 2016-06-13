@@ -40,6 +40,8 @@ public class GlobalReceiver extends CyclicBehaviour {
 
 	static boolean printedPeople;
 	static boolean printedRestaurants;
+	
+	static int arrived;
 
 	public GlobalReceiver(Agent a, DFAgentDescription[] allPeople, DFAgentDescription[] allRestaurants) {
 		super(a);
@@ -61,6 +63,7 @@ public class GlobalReceiver extends CyclicBehaviour {
 		printedPeople = false;
 		printedRestaurants = false;
 
+		arrived = 0;
 	}
 
 	@Override
@@ -107,6 +110,7 @@ public class GlobalReceiver extends CyclicBehaviour {
 
 			case (ACLMessage.CONFIRM): {
 				if (!msg.getSender().equals(myAgent.getAID())) {
+					arrived++;
 					String sender = msg.getSender().getLocalName();
 					Object obj = null;
 					try {
@@ -115,12 +119,14 @@ public class GlobalReceiver extends CyclicBehaviour {
 						e.printStackTrace();
 					}
 					if (sender.split(" ")[0].equals("Person")) {
+						
 						peopleSetup.put(sender, obj);
 						System.out.println("People JSON at: " + peopleSetup.size()*100/((Global)myAgent).nPeople
-								+ "%");
+								+ "%\n Arrived: " + arrived);
 					} else if (sender.split(" ")[0].equals("Restaurant")) {
 						restaurantsSetup.put(sender, obj);
-					}
+					} else
+						System.err.println(sender);
 
 					if (peopleSetup.size() == ((Global) myAgent).nPeople & !printedPeople) {
 						printedPeople = true;

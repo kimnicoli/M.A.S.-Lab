@@ -52,7 +52,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		Launcher launcher = new Launcher();
-		launcher.InitJade(10, 100, null, null);
+		launcher.InitJade(10, 90, null, null);
 	}
 
 }

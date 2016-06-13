@@ -138,6 +138,7 @@ public class PersonReceiver extends CyclicBehaviour {
 						try {
 							JSONmsg.setContentObject(((Person)myAgent).Encode());
 						} catch (IOException e) {
+							System.err.println("JSON Not sent");
 							e.printStackTrace();
 						}
 						myAgent.send(JSONmsg);
