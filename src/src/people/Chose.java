@@ -50,7 +50,7 @@ public class Chose extends OneShotBehaviour {
 			} else if(random < Main.ProbChooseBFF){
 				sortedset.addAll(((Person)myAgent).worldTrust.entrySet());
 				AID bff = null;
-				while(!((Person)myAgent).friends.contains(bff)){
+				while(!((Person)myAgent).friends.contains(bff) & sortedset.size() != 0){
 					bff = sortedset.first().getKey();
 					sortedset.remove(sortedset.first());
 				}
