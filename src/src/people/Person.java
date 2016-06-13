@@ -37,7 +37,7 @@ public class Person extends Agent {
 	protected void setup() {
 		
 		restMap = new TreeMap();
-		maxValue = Main.MinimumEvaluation + Math.random() * (Main.EvaluateRange - Main.MinimumEvaluation);//Main.EvaluateRange;//
+		maxValue = Main.EvaluateRange;//Main.MinimumEvaluation + Math.random() * (Main.EvaluateRange - Main.MinimumEvaluation);//
 		boldness = Main.MinBoldness + Math.random() * (Main.MaxBoldness - Main.MinBoldness);
 		worldTrust = new Hashtable<AID, Double>();
 		friends = new Vector<AID>();
@@ -57,7 +57,7 @@ public class Person extends Agent {
 		System.out.println("Hi from " + getLocalName() + "! I prefer " + maxValue);
 		
 		for (DFAgentDescription result : results){
-			restMap.put(result.getName(), Math.random() * Main.EvaluateRange);
+			restMap.put(result.getName(), 0.5*Main.EvaluateRange);//Math.random() * Main.EvaluateRange);
 			opinions.put(result.getName(), new Hashtable<AID, Double>());
 		}
 		
