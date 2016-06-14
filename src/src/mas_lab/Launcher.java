@@ -1,5 +1,6 @@
 package src.mas_lab;
 
+import jade.Boot;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentController;
@@ -25,8 +26,14 @@ public class Launcher {
 	public void InitJade(int nRestaurants, int nPeople, String restaurantSetup, String peopleSetup) {
 		runtime = jade.core.Runtime.instance();
 		
+		/*Boot.main(new String[] {
+				"-jade_domain_df_maxresult",
+                "-1"
+        });*/
+		
 		Profile p = new ProfileImpl();
 		p.setParameter(Profile.NO_MTP, "true");
+		p.setParameter("jade_domain_df_maxresult", "1000");
 		
 		ContainerController cc = runtime.createMainContainer(p);
 		

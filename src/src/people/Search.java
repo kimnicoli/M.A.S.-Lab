@@ -35,7 +35,6 @@ public class Search extends OneShotBehaviour {
 
 	@Override
 	public void action() {
-		
 		if (!((Person)myAgent).restMap.isEmpty()) {
 			SortedSet<Map.Entry<AID, Double>> sortedset = new TreeSet<Map.Entry<AID, Double>>(
 		            new Comparator<Map.Entry<AID, Double>>() {
@@ -71,15 +70,15 @@ public class Search extends OneShotBehaviour {
 					myAgent.send(request);
 					
 					receivers.addElement(current.getKey());
-				} else
-					System.out.println("Excluded " + current.getKey().getLocalName());
+				}// else
+					//System.out.println("Excluded " + current.getKey().getLocalName());
 			}
 			
 			
 			receiver.setReceivers(receivers);
 			if(receivers.size() == 0){
 				System.err.println(myAgent.getLocalName() + ": No good found");
-				myAgent.addBehaviour(new Evaluate(myAgent, null));
+				myAgent.addBehaviour(new Evaluate(myAgent, -1, null));
 			}
 		}
 	}
