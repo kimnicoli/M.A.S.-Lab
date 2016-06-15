@@ -71,8 +71,7 @@ public class Search extends OneShotBehaviour {
 					myAgent.send(request);
 					
 					receivers.addElement(current.getKey());
-				} else
-					System.out.println("Excluded " + current.getKey().getLocalName());
+				}
 			}
 			
 			

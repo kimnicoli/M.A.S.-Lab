@@ -27,6 +27,7 @@ public class Launcher {
 		
 		Profile p = new ProfileImpl();
 		p.setParameter(Profile.NO_MTP, "true");
+		p.setParameter("jade_domain_df_maxresult", "1000");
 		
 		ContainerController cc = runtime.createMainContainer(p);
 		
