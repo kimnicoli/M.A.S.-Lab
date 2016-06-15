@@ -101,7 +101,6 @@ public class PersonReceiver extends CyclicBehaviour {
 				case (ACLMessage.INFORM):{
 					if(msg.getSender().equals(currentTarget)){
 						myAgent.addBehaviour(new Evaluate(myAgent, Double.parseDouble(msg.getContent()),currentTarget));
-						Reset();
 						fullRestaurants.clear();
 					}
 					
@@ -118,7 +117,6 @@ public class PersonReceiver extends CyclicBehaviour {
 				}
 				case (ACLMessage.FAILURE):{
 					if(msg.getSender().equals(currentTarget)){
-						System.err.println(myAgent.getLocalName() + ": Received Failure");
 						fullRestaurants.add(currentTarget);
 						Reset();
 						myAgent.addBehaviour(new Search(this, fullRestaurants));
@@ -143,6 +141,7 @@ public class PersonReceiver extends CyclicBehaviour {
 						myAgent.send(JSONmsg);
 					}
 					else if(msg.getOntology().equals("New Turn")){
+						Reset();
 						myAgent.addBehaviour(new Search(this, fullRestaurants));
 					}
 					break;

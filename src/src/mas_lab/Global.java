@@ -100,7 +100,7 @@ public class Global extends Agent {
 		for(int i = 0; i < nRestaurants; i++) {
 			try {
 				Object[] args = new Object[1];
-				String key = "Restaurant " + i;
+				String key = "Restaurant " + String.format("%03d",i);
 				if(myRestaurants != null){
 					args[0] = myRestaurants.get(key);
 				} else
@@ -119,7 +119,7 @@ public class Global extends Agent {
 		for(int i = 0; i < nPeople; i++) {
 			try {
 				Object[] args = new Object[2];
-				String key = "Person " + i;
+				String key = "Person " + String.format("%03d",i);
 				if(myPeople != null){
 					args[0] = myPeople.get(key);
 				} else

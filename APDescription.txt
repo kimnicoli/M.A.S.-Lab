@@ -1,1 +1,1 @@
-( ap-description  :name "172.16.0.2:1099/JADE" :ap-services (set))
+( ap-description  :name "172.16.119.10:1099/JADE" :ap-services (set))

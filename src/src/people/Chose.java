@@ -45,7 +45,6 @@ public class Chose extends OneShotBehaviour {
 				sortedset.addAll(free.entrySet());
 				receiver.setCurrentTarget(sortedset.first().getKey());
 				myAgent.addBehaviour(new Eat(sortedset.first().getKey()));
-				System.out.println(myAgent.getLocalName() + ": Eating Now");
 				System.err.println("!!Normal choice!!");
 			} else if(random < Main.ProbChooseBFF){
 				sortedset.addAll(((Person)myAgent).worldTrust.entrySet());
