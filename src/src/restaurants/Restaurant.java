@@ -26,7 +26,7 @@ public class Restaurant extends Agent {
 	
 	protected void setup() {
 		quality = Math.random()* Main.EvaluateRange;
-		capacity = (int)(Math.random() * Main.MaxCapacity);
+		capacity = (int)(Main.MinCapacity + Math.random() * (Main.MaxCapacity - Main.MinCapacity));
 		fullness = 0;
 		
 		DFAgentDescription dfd = new DFAgentDescription();

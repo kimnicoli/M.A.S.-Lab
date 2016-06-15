@@ -13,7 +13,13 @@ public class Main {
 	/**
 	 * Capacità massima per gli agenti Restaurant
 	 */
-	public static int MaxCapacity = 10;
+	public static int MaxCapacity = 20;
+	/**
+	 * Capacità minima per gli agenti Restaurant
+	 */
+	public static int MinCapacity = 10;
+	
+	
 	/**
 	 * Valore minimo per la "cocciutaggine" degli agenti Person
 	 */
