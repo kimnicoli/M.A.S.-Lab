@@ -93,10 +93,10 @@ public class Log extends OneShotBehaviour {
 		if (this.trustMap != null) {
 			int nPer = trustMap.keySet().size();
 
-			if (((Global) myAgent).getTurn() != TURNO) // se il turno è cambiato
+			if (((Global) myAgent).getTurn() != TURNO) // se il turno ï¿½ cambiato
 			{
 
-				if (TURNO == -1) // se è il primo turno
+				if (TURNO == -1) // se ï¿½ il primo turno
 				{
 					matriceT = new double[nPer][nPer];
 					// metti la matrice = 0

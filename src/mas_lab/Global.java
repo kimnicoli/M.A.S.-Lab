@@ -59,7 +59,7 @@ public class Global extends Agent {
 		sd.setType("Restaurant");
 		dfd.addServices(sd);
 		
-		//Aspetto finché tutti i ristoranti sono attivi		
+		//Aspetto finchï¿½ tutti i ristoranti sono attivi		
 		while(results.length < nRestaurants) {		
 			try {
 				results = DFService.search(this, dfd);
@@ -77,7 +77,7 @@ public class Global extends Agent {
 		psd.setType("Person");
 		pdfd.addServices(psd);
 		
-		//Aspetto finché tutte le persone non sono attive
+		//Aspetto finchï¿½ tutte le persone non sono attive
 		DFAgentDescription[] presults = new DFAgentDescription[0];
 		while(presults.length < nPeople) {		
 			try {

@@ -11,11 +11,11 @@ public class Main {
 	 */
 	public static double MinimumEvaluation = 3.0;
 	/**
-	 * Capacità massima per gli agenti Restaurant
+	 * Capacitï¿½ massima per gli agenti Restaurant
 	 */
 	public static int MaxCapacity = 20;
 	/**
-	 * Capacità minima per gli agenti Restaurant
+	 * Capacitï¿½ minima per gli agenti Restaurant
 	 */
 	public static int MinCapacity = 10;
 	
@@ -38,16 +38,16 @@ public class Main {
 	 */
 	public static double ProbEvaluation = 1.0;
 	/**
-	 * Probabilità di una valutazione irrazionale
+	 * Probabilitï¿½ di una valutazione irrazionale
 	 */
 	public static double ProbFuzzyEvaluation = 0.1;
 	
 	/**
-	 * Probabilità di scegliere in base alla miglior opinione del miglior amico
+	 * Probabilitï¿½ di scegliere in base alla miglior opinione del miglior amico
 	 */
 	public static double ProbChooseBFF = 	0.1;
 	/**
-	 * Probabilità di scegliere il primo ristorante che risponde "libero"
+	 * Probabilitï¿½ di scegliere il primo ristorante che risponde "libero"
 	 */
 	public static double ProbChoseRandom = 0.1;
 	

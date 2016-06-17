@@ -1,10 +1,10 @@
-Person 000,1,Restaurant 000
-Person 008,1,Restaurant 000
-Person 007,1,Restaurant 000
 Person 003,1,Restaurant 000
-Person 004,1,Nowhere -1
+Person 008,1,Restaurant 000
+Person 004,1,Restaurant 000
 Person 005,1,Restaurant 000
+Person 001,1,Restaurant 000
+Person 007,1,Restaurant 000
+Person 009,1,Restaurant 000
+Person 006,1,Restaurant 000
 Person 002,1,Restaurant 000
-Person 001,1,Nowhere -1
-Person 006,1,Nowhere -1
-Person 009,1,Nowhere -1
+Person 000,1,Restaurant 000

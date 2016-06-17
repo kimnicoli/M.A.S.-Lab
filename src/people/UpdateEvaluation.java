@@ -29,7 +29,7 @@ public class UpdateEvaluation extends OneShotBehaviour {
 			System.out.println("Received opinion from" + sender.getLocalName());
 			
 			//Aggiungo l'opinione di sender alla mia lista di opinioni per 
-			//		poter valutare la sua affidabilità in futuro
+			//		poter valutare la sua affidabilitï¿½ in futuro
 			((Person)myAgent).opinions.get(address).put(sender, map.get(address));
 			
 			double think = ((Person)myAgent).restMap.get(address);
