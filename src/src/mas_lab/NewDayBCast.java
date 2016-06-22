@@ -77,7 +77,8 @@ public class NewDayBCast extends OneShotBehaviour {
 			} else {
 				msg.setOntology("New Turn");
 				msg.setContent(Integer.toString(((Global)myAgent).getTurn()));
-				System.out.println("-------------------New Turn-------------------");
+				System.out.println("-------------------New Turn " + ((Global)myAgent).getTurn()
+									+ "-------------------");
 			}
 			myAgent.send(msg);
 		} catch(FIPAException e) {

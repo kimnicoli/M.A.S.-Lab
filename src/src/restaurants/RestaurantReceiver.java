@@ -34,7 +34,23 @@ public class RestaurantReceiver extends CyclicBehaviour {
 					break;
 				}
 				case ACLMessage.ACCEPT_PROPOSAL:{
-					if(((Restaurant)myAgent).isFree() & !booked.contains(msg.getSender())){
+					if(booked.contains(msg.getSender())) {
+						System.err.println(myAgent.getLocalName() + ": Received double booking from " 
+								+ msg.getSender().getLocalName());
+						myAgent.addBehaviour(new RestaurantSender(ACLMessage.FAILURE, msg.getSender()));
+						block();
+					} else {
+						if(((Restaurant)myAgent).isFree()){
+							myAgent.addBehaviour(new RestaurantSender(ACLMessage.INFORM, msg.getSender(), true));
+							((Restaurant)myAgent).fullness++;
+							booked.add(msg.getSender());
+							block();
+						} else {
+							myAgent.addBehaviour(new RestaurantSender(ACLMessage.FAILURE, msg.getSender()));
+							block();
+						}
+					}
+					/*if(((Restaurant)myAgent).isFree() & !booked.contains(msg.getSender())){
 						myAgent.addBehaviour(new RestaurantSender(ACLMessage.INFORM, msg.getSender(), true));
 						((Restaurant)myAgent).fullness++;
 						booked.add(msg.getSender());
@@ -45,7 +61,7 @@ public class RestaurantReceiver extends CyclicBehaviour {
 												+ msg.getSender().getLocalName());
 						myAgent.addBehaviour(new RestaurantSender(ACLMessage.FAILURE, msg.getSender()));
 						block();
-					}
+					}*/
 					break;
 				}
 				case ACLMessage.CONFIRM:{
