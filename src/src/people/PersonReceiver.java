@@ -145,6 +145,7 @@ public class PersonReceiver extends CyclicBehaviour {
 					}
 					else if(msg.getOntology().equals("New Turn")){
 						Reset();
+						fullRestaurants.clear();
 						myAgent.addBehaviour(new Search(this, fullRestaurants));
 					}
 					break;
