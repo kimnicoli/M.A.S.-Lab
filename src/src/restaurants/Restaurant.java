@@ -25,7 +25,7 @@ public class Restaurant extends Agent {
 	AID global;
 	
 	protected void setup() {
-		quality = Math.random()* Main.EvaluateRange;
+		quality = 2.5;//Math.random()* Main.EvaluateRange;
 		capacity = (int)(Main.MinCapacity + Math.random() * (Main.MaxCapacity - Main.MinCapacity));
 		fullness = 0;
 		
