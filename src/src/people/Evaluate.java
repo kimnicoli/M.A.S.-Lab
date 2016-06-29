@@ -60,13 +60,13 @@ public class Evaluate extends OneShotBehaviour {
 			double think = ((Person) myAgent).restMap.get(place);
 			double dThink = ((Person) myAgent).boldness * (quality - think);
 	
-			if (Math.random() < Main.ProbFuzzyEvaluation) {
+			/*if (Math.random() < Main.ProbFuzzyEvaluation) {
 				dThink = Math.random() * Main.EvaluateRange;
 				System.err.println("!!Fuzzy opinion!!");
 			} else
 				System.err.println("!!Standard opinion!!");
-	
-			think += dThink + (0.5 - Math.random()) * Main.ProbEvaluation;
+	*/
+			think += dThink; //+ (0.5 - Math.random()) * Main.ProbEvaluation;
 			if (think < 0)
 				think = 0;
 			else if (think > Main.EvaluateRange)

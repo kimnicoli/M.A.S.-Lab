@@ -24,7 +24,7 @@ import src.mas_lab.Main;
 public class Person extends Agent {
 
 	TreeMap<AID, Double> restMap;
-	double maxValue; //Consideriamo una scala di valutazione inversa. Perché la TreeMap ordina dal più basso al più alto
+	double maxValue; //Consideriamo una scala di valutazione inversa. Perchï¿½ la TreeMap ordina dal piï¿½ basso al piï¿½ alto
 	double boldness;
 	
 	Hashtable<AID, Double> worldTrust;
